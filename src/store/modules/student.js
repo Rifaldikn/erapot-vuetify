@@ -6,8 +6,8 @@ const state = {
 
 const getters = {
   // studentData: state => id => {
-  //   console.log(state.murid.find(murid => murid.kelas == 5))
-  //   return state.murid.find(murid => murid.kelas == 5);
+  //   // console.log(state.murid.find(murid => murid.kelas == id))
+  //   return state.murid.find(murid => murid.kelas == id);
     
   // },
   studentData: state => state.murid

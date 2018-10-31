@@ -115,18 +115,25 @@ export default {
     },
     formITems: {
       gender: ["Laki - Laki", "Perempuan"]
-      // kelas: [1, 2, 3]
     }
   }),
-
   computed: {
     formTitle() {
       return this.editedIndex === -1 ? "Tambah murid" : "Edit murid";
     },
     ...mapGetters({
-      desserts: "student/studentData",
+      // desserts: "student/studentData",
       kelas: "kelas/dataKelas"
-    })
+    }),
+    desserts() {
+      if (!this.$route.params.id) {
+        return this.$store.getters["student/studentData"];
+      } else {
+        return this.$store.getters["student/studentData"].filter(
+          e => e.kelas == this.$route.params.id
+        );
+      }
+    }
   },
 
   watch: {

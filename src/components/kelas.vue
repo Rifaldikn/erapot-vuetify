@@ -117,8 +117,8 @@ export default {
         this.editedIndex = -1;
       }, 300);
     },
-    lihatKelas(idkelas){
-      this.$router.push('/admin/siswa/kelas/'+ idkelas)
+    lihatKelas(idkelas) {
+      this.$router.push("/admin/siswa/kelas/" + idkelas);
     },
     save() {
       if (this.editedIndex > -1) {
