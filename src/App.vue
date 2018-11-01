@@ -49,7 +49,7 @@
 
       <v-toolbar color="blue-grey darken-4" dark fixed app flat>
         <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-        <v-toolbar-title><span class="red--text">Rapot</span> Online</v-toolbar-title>
+        <v-toolbar-title><span class="red--text">e-Rapot</span> v0.00001a</v-toolbar-title>
       </v-toolbar>
 
       <v-content class="blue-grey lighten-5">
@@ -85,6 +85,8 @@
           { icon: 'fas fa-users', text: 'Data Siswa', path: "/admin/siswa" },
           { icon: 'meeting_room', text: 'Kelas', path: "/admin/kelas" },
           { icon: 'fas fa-clipboard-list', text: 'Mata Pelajaran', path: "/admin/matapelajaran" },
+          { icon: 'insert_chart_outlinedt', text: 'Penilaian', path: "/admin/penilaian" },
+          { icon: 'chrome_reader_mode', text: 'Jenis Penilaian', path: "/admin/jenispenilaian"},
           { icon: 'settings', text: 'Settings', path: "/admin/settings" },
         ]
       };

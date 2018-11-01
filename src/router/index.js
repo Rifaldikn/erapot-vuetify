@@ -10,6 +10,10 @@ import Kelas from "@/components/kelas.vue";
 import Subject from "@/components/matapelajaran.vue";
 import Dashboard from "@/components/dashboard.vue";
 import Settings from "@/components/settings.vue";
+import JenisPenilaian from "@/components/jenisPenilaian.vue";
+import Penilaian from "@/components/penilaian.vue";
+
+
 
 Vue.use(Router);
 
@@ -66,6 +70,14 @@ export default new Router({
     {
       path: "/admin/siswa/kelas/:id",
       component: ListStudent
+    },
+    {
+      path: "/admin/penilaian",
+      component: Penilaian
+    },
+    {
+      path: "/admin/jenispenilaian",
+      component: JenisPenilaian
     },
     {
       path: "/admin/settings",
