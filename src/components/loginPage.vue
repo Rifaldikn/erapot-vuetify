@@ -33,28 +33,28 @@
 </template>
 
 <script>
-  export default {
-    data: () => ({
-      loading: false,
-      alert: {
-        status: false,
-        msg: ''
-      },
-      model: {
-        username: "",
-        password: "",
-        statusLogin: String
-      },
-      items: ["Administrator", "Guru"],
-    }),
-    methods: {
-      login() {
-        this.loading = true;
-        if(!this.model.username || !this.model.password || !this.model.statusLogin){
-          this.alert.status = true
-          this.alert.msg = "Kolom tidak boleh ada yang kosong"
-          this.loading = false
-        }
+export default {
+  data: () => ({
+    loading: false,
+    alert: {
+      status: false,
+      msg: ""
+    },
+    model: {
+      username: "",
+      password: "",
+      statusLogin: ""
+    },
+    items: ["Administrator", "Guru"]
+  }),
+  methods: {
+    login() {
+      this.loading = true;
+      if (
+        this.model.username &&
+        this.model.password &&
+        this.model.statusLogin
+      ) {
         setTimeout(() => {
           if (this.model.statusLogin == "Administrator") {
             this.$router.push("/admin");
@@ -62,38 +62,43 @@
             this.$router.push("/guru");
           }
         }, 1000);
+      } else {
+        this.alert.status = true;
+        this.alert.msg = "Kolom tidak boleh ada yang kosong";
+        this.loading = false;
       }
     }
-  };
+  }
+};
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  h1,
-  h2 {
-    font-weight: normal;
-  }
+h1,
+h2 {
+  font-weight: normal;
+}
 
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
+ul {
+  list-style-type: none;
+  padding: 0;
+}
 
-  li {
-    display: inline-block;
-    margin: 0 10px;
-  }
+li {
+  display: inline-block;
+  margin: 0 10px;
+}
 
-  a {
-    color: #42b983;
-  }
+a {
+  color: #42b983;
+}
 
-  #login {
-    height: 50%;
-    width: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    content: "";
-    z-index: 0;
-  }
+#login {
+  height: 50%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: "";
+  z-index: 0;
+}
 </style>

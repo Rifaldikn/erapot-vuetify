@@ -49,18 +49,6 @@
           <v-icon small @click="deleteItem(props.item)">
             delete
           </v-icon>
-
-
-<div id="app">
-    <router-view> //ini untuk child pertama yaitu audiences
-      <router-view></router-view> //ini untuk child kedua yaitu new/collection
-    </router-view>
-</div>
-
-
-
-
-
         </td>
       </template>
       <template slot="no-data">

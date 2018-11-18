@@ -2,7 +2,7 @@
     <v-app>
         <v-container>
             <v-layout row>
-                <v-container>
+                    <v-container>
                     <v-flex xs12>
                         <v-select :items="kelas.map(a => a.kelas).sort()" label="Kelas" v-model="assignForm.mataPelajaran" box
                             dense required="true"></v-select>
@@ -28,35 +28,34 @@
 </template>
 
 <script>
-    import { mapGetters } from "vuex";
-    export default {
-        data: () => ({
-            desserts: [],
-            editedIndex: -1,
-            // editedItem: {
-            //   kelas: 0,
+import { mapGetters } from "vuex";
+export default {
+  data: () => ({
+    desserts: [],
+    editedIndex: -1,
+    // editedItem: {
+    //   kelas: 0,
 
-            // },
-            // defaultItem: {
-            //   jenis: "",
-            //   persentase: 0,
-            //   keterangan: ""
-            // }
-            assignForm: {
-                kelas: 0,
-                mataPelajaran: "",
-                smtr: "",
-                tahunPelajaran: ""
-            },
-            mataPelajaran: ['IPA', 'IPS', 'B. Indonesia', 'PPKN'],
-            tahunAjaran: ['2014/2015', '2015/2016', '2016/2017', '2017/2018'],
-            smtr: [1, 2]
-
-        }),
-        computed: {
-            ...mapGetters({
-                kelas: "kelas/dataKelas"
-            })
-        }
-    };
+    // },
+    // defaultItem: {
+    //   jenis: "",
+    //   persentase: 0,
+    //   keterangan: ""
+    // }
+    assignForm: {
+      kelas: 0,
+      mataPelajaran: "",
+      smtr: "",
+      tahunPelajaran: ""
+    },
+    mataPelajaran: ["IPA", "IPS", "B. Indonesia", "PPKN"],
+    tahunAjaran: ["2014/2015", "2015/2016", "2016/2017", "2017/2018"],
+    smtr: [1, 2]
+  }),
+  computed: {
+    ...mapGetters({
+      kelas: "kelas/dataKelas"
+    })
+  }
+};
 </script>

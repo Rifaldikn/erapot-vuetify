@@ -2,7 +2,7 @@
   <v-app id="inspire">
     <template v-if="!$route.meta.public">
 
-      <v-navigation-drawer width="250" flat  app v-model="drawer">
+      <v-navigation-drawer width="200" flat  app v-model="drawer">
         <v-list v-for="item in items" :key="item.text">
 
           <v-list-tile  :to="{path: item.path}">
