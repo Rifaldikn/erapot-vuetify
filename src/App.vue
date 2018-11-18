@@ -77,7 +77,6 @@
       return {
         drawer: true,
         authLogin: true,
-        // initSchool: Boolean,
         title: "Home",
         items: [
           { icon: 'fas fa-columns', text: 'Halaman Utama', path: "/" },
