@@ -12,7 +12,10 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "fast-crc32c": "^1.0.4",
     "firebase": "^5.5.8",
+    "firebase-admin": "^6.1.0",
+    "http2": "^3.3.7",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
     "vuetify": "^1.0.0",

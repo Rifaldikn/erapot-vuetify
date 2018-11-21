@@ -5,13 +5,7 @@ const state = {
 };
 
 const getters = {
-  // studentData: state => id => {
-  //   // console.log(state.murid.find(murid => murid.kelas == id))
-  //   return state.murid.find(murid => murid.kelas == id);
-    
-  // },
   studentData: state => state.murid
-
 };
 
 const mutations = {

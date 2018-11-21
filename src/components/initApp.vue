@@ -25,7 +25,7 @@
                                             <v-flex md6>
                                                 <v-text-field v-model="schoolData.schoolName" label="Nama Sekolah" required>
                                                 </v-text-field>
-                                                <v-text-field v-model="schoolData.nspn" label="NPSN/NSN" required>
+                                                <v-text-field v-model="schoolData.npsn" label="NPSN/NSN" required>
                                                 </v-text-field>
                                                 <v-text-field v-model="schoolData.address" label="Alamat" required>
                                                 </v-text-field>
@@ -76,29 +76,29 @@
                                     <v-container>
                                         <v-layout row wrap>
                                             <v-flex xs5>
-                                                <v-text-field v-model="name" label="Nama Depan" required>
+                                                <v-text-field v-model="adminData.firstName" label="Nama Depan" required>
                                                 </v-text-field>
-                                                <v-text-field v-model="name" label="Nama Belakang" required>
+                                                <v-text-field v-model="adminData.lastName" label="Nama Belakang" required>
                                                 </v-text-field>
-                                                <v-text-field v-model="name" label="Jenis Kelamin" required>
+                                                <v-text-field v-model="adminData.gender" label="Jenis Kelamin" required>
                                                 </v-text-field>
-                                                <v-text-field v-model="name" label="Tempat Lahir" required>
+                                                <v-text-field v-model="adminData.birthPlace" label="Tempat Lahir" required>
                                                 </v-text-field>
-                                                <v-text-field v-model="name" label="Tanggal Lahir" required>
+                                                <v-text-field v-model="adminData.birthDate" label="Tanggal Lahir" required>
                                                 </v-text-field>
 
                                             </v-flex>
 
                                             <v-flex offset-xs1 xs6>
-                                                <v-text-field v-model="name" label="Username" required>
+                                                <v-text-field v-model="adminData.username" label="Username" required>
                                                 </v-text-field>
-                                                <v-text-field v-model="name" label="Email" required>
+                                                <v-text-field v-model="adminData.email" label="Email" required>
                                                 </v-text-field>
-                                                <v-text-field v-model="name" label="Password" required>
+                                                <v-text-field v-model="adminData.password" label="Password" required>
                                                 </v-text-field>
                                             </v-flex>
                                         </v-layout>
-                                        <v-text-field v-model="name" label="Alamat" required>
+                                        <v-text-field v-model="adminData.address" label="Alamat" required>
                                         </v-text-field>
                                     </v-container>
 
@@ -114,16 +114,6 @@
 
                     <v-btn flat @click="e1 = 1">Back</v-btn>
                 </v-stepper-content>
-
-                <!-- <v-stepper-content step="3">
-                    <v-card class="mb-5" color="grey lighten-1" height="200px"></v-card>
-
-                    <v-btn color="primary" @click="nextStep()">
-                        Save
-                    </v-btn>
-
-                    <v-btn flat @click="e1 = 2">Back</v-btn>
-                </v-stepper-content> -->
             </v-stepper-items>
 
         </v-stepper>
@@ -132,12 +122,10 @@
 </template>
 
 <script>
-// import axios from "axios";
 import { mapGetters } from "vuex";
 
-
 export default {
-  data() {
+  data: () => {
     return {
       e1: 1,
       loading: false,
@@ -152,6 +140,17 @@ export default {
         zip: "",
         phone: "",
         email: ""
+      },
+      adminData: {
+        firstName: "",
+        lastName: "",
+        gender: "",
+        birthPlace: "",
+        birthDate: "",
+        username: "",
+        email: "",
+        password: "",
+        address: ""
       }
     };
   },
@@ -178,7 +177,8 @@ export default {
     saveData() {
       this.loading = true;
       if (confirm("Are u sure want to save data?")) {
-        this.$store.commit("school/SET_Data", this.schoolData);
+        this.$store.dispatch("school/SET_Data", this.schoolData)
+        this.$store.dispatch("teacher/SET_Data", this.adminData)
         setTimeout(() => {
           this.$router.push("/");
         }, 1500);

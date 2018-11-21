@@ -72,33 +72,51 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        drawer: true,
-        authLogin: true,
-        title: "Home",
-        items: [
-          { icon: 'fas fa-columns', text: 'Halaman Utama', path: "/" },
-          { icon: 'fas fa-chalkboard-teacher', text: 'Data Guru', path: "/admin/guru" },
-          { icon: 'fas fa-users', text: 'Data Siswa', path: "/admin/siswa" },
-          { icon: 'meeting_room', text: 'Kelas', path: "/admin/kelas" },
-          { icon: 'fas fa-clipboard-list', text: 'Mata Pelajaran', path: "/admin/matapelajaran" },
-          { icon: 'insert_chart_outlinedt', text: 'Penilaian', path: "/admin/penilaian" },
-          { icon: 'chrome_reader_mode', text: 'Jenis Penilaian', path: "/admin/jenispenilaian"},
-          { icon: 'settings', text: 'Settings', path: "/admin/settings" },
-        ]
-      };
-    },
-    name: "App"
-  };
+import { mapGetters } from "vuex";
+
+export default {
+ 
+  data() {
+    return {
+      drawer: true,
+      authLogin: true,
+      title: "Home",
+      items: [
+        { icon: "fas fa-columns", text: "Halaman Utama", path: "/" },
+        {
+          icon: "fas fa-chalkboard-teacher",
+          text: "Data Guru",
+          path: "/admin/guru"
+        },
+        { icon: "fas fa-users", text: "Data Siswa", path: "/admin/siswa" },
+        { icon: "meeting_room", text: "Kelas", path: "/admin/kelas" },
+        {
+          icon: "fas fa-clipboard-list",
+          text: "Mata Pelajaran",
+          path: "/admin/matapelajaran"
+        },
+        {
+          icon: "insert_chart_outlinedt",
+          text: "Penilaian",
+          path: "/admin/penilaian"
+        },
+        {
+          icon: "chrome_reader_mode",
+          text: "Jenis Penilaian",
+          path: "/admin/jenispenilaian"
+        },
+        { icon: "settings", text: "Settings", path: "/admin/settings" }
+      ]
+    };
+  },
+  name: "App"
+};
 </script>
 
 <style>
-  font-family: "Roboto",
-  sans-serif;
+font-family: "Roboto", sans-serif;
 
-  #page-content {
-    background-color: rgb(206, 219, 235);
-  }
+#page-content {
+  background-color: rgb(206, 219, 235);
+}
 </style>

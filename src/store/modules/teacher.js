@@ -1,27 +1,46 @@
-import { guru } from "../fake-data";
-
+import { db } from '../../main'
 const state = {
-  teachers: guru
-};
+  teachersData: []
+}
 
 const getters = {
-  teachersData: state => state.teachers
-};
+  teachersData: state => state.teachersData
+}
 
 const mutations = {
-//   INIT_Data(state) {
-//     Object.assign(state.teachers, this.guru)
-//   },
-  SET_Data(state, guru) {
-    Object.assign(state.teachers, this.teachers);
+  SET_Data(state, payload) {
+    state.teachersData.push(payload)
+  },
+  INIT_Data(state, payload) {
+    state.teachersData = payload
   }
-};
+}
 
 const actions = {
-  //   SET_Data ({ commit }) {
-  //     commit('SET_Data', schoolData)
-  //   }
-};
+  SET_Data({ commit }, payload) {
+    console.log(payload)
+    db.collection('teachers').doc(payload.username).set(payload).then((data) => {
+      commit('SET_Data', payload)
+    })
+      .catch((error) => {
+        console.log(error)
+      })
+  },
+  GET_Data({ commit }) {
+    db.collection('teachers').get().then(snapshot => {
+      var temp = []
+      snapshot.forEach(doc => {
+        // console.log(snapshot.doc.data())
+        temp.push(doc.data())
+      })
+      console.log(temp)
+      commit('INIT_Data', temp)
+
+    }).catch((err) => {
+      console.log('Error getting documents', err)
+    })
+  }
+}
 
 export default {
   namespaced: true,
@@ -29,4 +48,4 @@ export default {
   getters,
   mutations,
   actions
-};
+}

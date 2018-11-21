@@ -1,16 +1,12 @@
-import Vue from "vue";
-import Vuex from "vuex";
-// import createLogger from '../../../src/plugins/logger'
-import app from "./modules/app";
-import school from "./modules/school";
-import teacher from "./modules/teacher";
-import kelas from "./modules/kelas";
-import student from "./modules/student";
-
-Vue.use(Vuex);
-
-// const debug = process.env.NODE_ENV !== 'production'
-
+import Vue from 'vue'
+import Vuex from 'vuex'
+// import {db} from "../main"
+import app from './modules/app'
+import school from './modules/school'
+import teacher from './modules/teacher'
+import kelas from './modules/kelas'
+import student from './modules/student'
+Vue.use(Vuex)
 export default new Vuex.Store({
   modules: {
     app,
@@ -19,4 +15,4 @@ export default new Vuex.Store({
     kelas,
     student
   }
-});
+})

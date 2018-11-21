@@ -70,51 +70,53 @@
 import { mapGetters, Store } from "vuex";
 
 export default {
-  data: () => ({
-    dialog: false,
-    headers: [
-      {
-        text: "Nip",
-        align: "left",
-        // sortable: false,
-        value: "nip"
+  created() {
+    this.$store.dispatch("teacher/GET_Data");
+  },
+  data: function() {
+    return {
+      dialog: false,
+      headers: [
+        {
+          text: "Nip",
+          align: "left",
+          value: "nip"
+        },
+        { text: "Nama", value: "teacherName" },
+        { text: "TTL", value: "ttl" },
+        { text: "Akun", value: "account" },
+        { text: "Actions", value: "name", sortable: false, align: "center" }
+      ],
+      // desserts: [],
+      editedIndex: -1,
+      editedItem: {
+        nip: "",
+        birthPlace: "",
+        birthDate: "",
+        teacherName: "",
+        ttl: "",
+        password: "",
+        username: ""
       },
-      { text: "Nama", value: "teacherName" },
-      { text: "TTL", value: "ttl" },
-      { text: "Akun", value: "account" },
-
-      { text: "Actions", value: "name", sortable: false, align: "center" }
-    ],
-    // desserts: [],
-    editedIndex: -1,
-    editedItem: {
-      nip: "",
-      birthPlace: "",
-      birthDate: "",
-      teacherName: "",
-      ttl: "",
-      password: "",
-      username: ""
-    },
-    defaultItem: {
-      nip: "",
-      birthPlace: "",
-      birthDate: "",
-      teacherName: "",
-      ttl: "",
-      password: "",
-      username: ""
-    }
-  }),
-
+      defaultItem: {
+        nip: "",
+        birthPlace: "",
+        birthDate: "",
+        teacherName: "",
+        ttl: "",
+        password: "",
+        username: ""
+      }
+    };
+  },
   computed: {
     formTitle() {
       return this.editedIndex === -1 ? "Tambah Guru" : "Edit Guru";
     },
-      ...mapGetters("teacher", {
-        desserts: 'teachersData'
-      })
-    },
+    ...mapGetters("teacher", {
+      desserts: "teachersData"
+    })
+  },
   watch: {
     dialog(val) {
       val || this.close();
@@ -145,8 +147,9 @@ export default {
       if (this.editedIndex > -1) {
         Object.assign(this.desserts[this.editedIndex], this.editedItem);
       } else {
-        this.account = this.username;
-        this.desserts.push(this.editedItem);
+        // this.account = this.username;
+        // this.desserts.push(this.editedItem);
+        this.$store.dispatch("teacher/SET_Data", this.editedItem)
       }
       this.close();
     }

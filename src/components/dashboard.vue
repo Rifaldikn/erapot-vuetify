@@ -63,12 +63,13 @@
 <script>
 import MiniStatistic from "./mini-statistic.vue";
 import { mapGetters } from "vuex";
+
 export default {
   components: {
     MiniStatistic
   },
   computed: {
-    ...mapGetters("school", ['schoolData'])
+    ...mapGetters("school", ["schoolData"])
   }
 };
 </script>
