@@ -19,7 +19,7 @@ const mutations = {
 const actions = {
   SET_Data({ commit }, payload) {
     console.log(payload)
-    db.collection('teachers').doc(payload.username).set(payload).then((data) => {
+    db.collection('teachers').doc(payload.nip).set(payload).then((data) => {
       commit('SET_Data', payload)
     })
       .catch((error) => {
@@ -35,10 +35,23 @@ const actions = {
       })
       console.log(temp)
       commit('INIT_Data', temp)
-
     }).catch((err) => {
       console.log('Error getting documents', err)
     })
+  },
+  UPDATE_Data({dispatch}, payload) {
+    console.log(payload)
+    db.collection("teachers").doc(payload.nip).get().then(function (doc) {
+      if (doc && doc.exists) {
+        // var data = doc.data();
+        // saves the data to 'name'
+        db.collection("teachers").doc(payload.nip).set(payload).then(() => {
+          dispatch('GET_Data')
+          alert("Edited")
+          // db.collection("teachers").doc("name).delete();
+        });
+      }
+    });
   }
 }
 

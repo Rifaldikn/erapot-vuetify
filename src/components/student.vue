@@ -15,10 +15,10 @@
             <v-container grid-list-md>
               <v-layout wrap>
                 <v-flex xs12 sm6>
-                  <v-text-field v-model="editedItem.nis" label="NIS"></v-text-field>
+                  <v-text-field v-model="editedItem.nis" label="NIS" disabled></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm6>
-                  <v-text-field v-model="editedItem.nisn" label="NISN"></v-text-field>
+                  <v-text-field v-model="editedItem.nisn" label="NISN" disabled></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm12>
                   <v-text-field v-model="editedItem.studentName" label="NAMA"></v-text-field>
@@ -121,10 +121,12 @@ export default {
     formTitle() {
       return this.editedIndex === -1 ? "Tambah murid" : "Edit murid";
     },
-    ...mapGetters({
-      // desserts: "student/studentData",
-      kelas: "kelas/dataKelas"
+    ...mapGetters("kelas", {
+      kelas: "dataKelas"
     }),
+    // ...mapGetters("student", {
+    //   desserts: "studentData"
+    // }),
     desserts() {
       if (!this.$route.params.id) {
         return this.$store.getters["student/studentData"];
@@ -164,10 +166,14 @@ export default {
 
     save() {
       if (this.editedIndex > -1) {
-        Object.assign(this.desserts[this.editedIndex], this.editedItem);
+        // Object.assign(this.desserts[this.editedIndex], this.editedItem);
+        this.$store.dispatch("student/UPDATE_Data", this.editedItem)
       } else {
-        this.account = this.username;
-        this.desserts.push(this.editedItem);
+        // this.account = this.username;
+        // this.desserts.push(this.editedItem);
+        console.log("add new")
+        this.$store.dispatch("student/SET_Data", this.editedItem)
+
       }
       this.close();
     }

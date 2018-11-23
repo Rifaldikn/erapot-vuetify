@@ -59,9 +59,9 @@
                     </v-icon>
                 </td>
             </template>
-            <template slot="no-data">
+            <!-- <template slot="no-data">
                 <v-btn color="primary" @click="initialize">Reset</v-btn>
-            </template>
+            </template> -->
         </v-data-table>
     </div>
 </template>
@@ -71,7 +71,6 @@ import { mapGetters, Store } from "vuex";
 
 export default {
   created() {
-    this.$store.dispatch("teacher/GET_Data");
   },
   data: function() {
     return {
@@ -145,7 +144,8 @@ export default {
 
     save() {
       if (this.editedIndex > -1) {
-        Object.assign(this.desserts[this.editedIndex], this.editedItem);
+        // Object.assign(this.desserts[this.editedIndex], this.editedItem);
+        this.$store.dispatch("teacher/UPDATE_Data", this.editedItem)
       } else {
         // this.account = this.username;
         // this.desserts.push(this.editedItem);

@@ -51,9 +51,9 @@
           </v-icon>
         </td>
       </template>
-      <template slot="no-data">
+      <!-- <template slot="no-data">
         <v-btn color="primary" @click="initialize">Reset</v-btn>
-      </template>
+      </template> -->
     </v-data-table>
   </div>
 </template>

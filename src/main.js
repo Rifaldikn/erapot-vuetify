@@ -36,14 +36,16 @@ Vue.config.productionTip = false
 
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',
   db,
   store,
   created() {
     this.$store.dispatch('school/GET_Data')
-    // console.log(store.getters['school/schoolData'])
+    this.$store.dispatch('teacher/GET_Data')
+    this.$store.dispatch('student/GET_Data')
   },
-  router,
+  el: '#app',
   components: { App },
   template: '<App/>',
+  router
+
 })

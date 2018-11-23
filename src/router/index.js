@@ -1,6 +1,6 @@
+import store from '../store'
 import Vue from 'vue'
 import Router from 'vue-router'
-import store from '../store'
 import InitApp from '@/components/initApp'
 import LoginPage from '@/components/loginPage'
 import error404 from '@/components/404'
@@ -37,6 +37,11 @@ var router = new Router({
       component: InitApp,
       meta: {
         public: true
+      },
+      beforeEnter (to, from, next) {
+        if (store.getters['school/schoolData']) {
+          router.push('login')
+        }
       }
     },
     {
@@ -107,5 +112,12 @@ var router = new Router({
     }
   ]
 })
+
+// router.beforeEach((to, from, next) => {
+//   if(5 < 100){
+//     router.push('/login')
+//   }
+// })
+
 
 export default router

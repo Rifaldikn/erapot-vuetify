@@ -34,7 +34,7 @@
                    <v-container class="justify-center align-center">
                         <v-layout row wrap >
                                 <v-flex xs6 >
-                                    <mini-statistic icon="fas fa-chalkboard-teacher" title="32" sub-title="GURU" color="indigo"
+                                    <mini-statistic icon="fas fa-chalkboard-teacher" :title="teachersData.length" sub-title="GURU" color="indigo"
                                         path="/admin/guru">
                                     </mini-statistic>
                                 </v-flex>
@@ -69,7 +69,9 @@ export default {
     MiniStatistic
   },
   computed: {
-    ...mapGetters("school", ["schoolData"])
+    ...mapGetters('school',['schoolData']),
+    ...mapGetters('teacher',['teachersData']),
+    ...mapGetters('student',['studentData'])
   }
 };
 </script>
