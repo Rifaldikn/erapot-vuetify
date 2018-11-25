@@ -1,26 +1,26 @@
 import { db } from '../../main';
 const state = {
-  teachersData: []
+  subjectData: []
 }
 
 const getters = {
-  teachersData: state => state.teachersData
+  subjectData: state => state.subjectData
 }
 
 const mutations = {
   SET_Data (state, payload) {
-    state.teachersData.push(payload)
+    state.subjectData.push(payload)
   },
   INIT_Data (state, payload) {
-    state.teachersData = payload
+    state.subjectData = payload
   }
 }
 
 const actions = {
   SET_Data ({ commit }, payload) {
     console.log(payload)
-    db.collection('teachers')
-      .doc(payload.nip)
+    db.collection('subject')
+      .doc(payload.subject)
       .set(payload)
       .then(data => {
         commit('SET_Data', payload)
@@ -30,7 +30,7 @@ const actions = {
       })
   },
   GET_Data ({ commit }) {
-    db.collection('teachers')
+    db.collection('subject')
       .get()
       .then(snapshot => {
         var temp = []
@@ -46,12 +46,12 @@ const actions = {
   },
   UPDATE_Data ({ dispatch }, payload) {
     console.log(payload)
-    db.collection('teachers')
-      .doc(payload.nip)
+    db.collection('subject')
+      .doc(payload.subject)
       .get()
       .then(function (doc) {
         if (doc && doc.exists) {
-          db.collection('teachers')
+          db.collection('subject')
             .doc(payload.nip)
             .set(payload)
             .then(() => {
@@ -63,7 +63,7 @@ const actions = {
   },
   DELETE_Data ({ dispatch }, payload) {
     // console.log(payload)
-    db.collection('teachers')
+    db.collection('subject')
       .doc(payload.username)
       .delete()
       .then(() => {

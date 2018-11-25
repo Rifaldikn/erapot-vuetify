@@ -2,7 +2,7 @@
   <v-app id="inspire">
     <template v-if="!$route.meta.public">
 
-      <v-navigation-drawer width="200" flat  app v-model="drawer">
+      <v-navigation-drawer width="250" flat  app v-model="drawer">
         <v-list v-for="item in items" :key="item.text">
 
           <v-list-tile  :to="{path: item.path}">
@@ -12,7 +12,7 @@
             <v-list-tile-title >{{item.text}}</v-list-tile-title>
           </v-list-tile>
 
-          <v-list-group v-if="extended" prepend-icon="account_circle" value="true">
+          <v-list-group v-if="item.extended" prepend-icon="account_circle" value="true">
             <v-list-tile slot="activator">
               <v-list-tile-title>Users</v-list-tile-title>
             </v-list-tile>

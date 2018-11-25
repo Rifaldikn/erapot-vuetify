@@ -50,6 +50,10 @@ var router = new Router({
       component: ListGuru
     },
     {
+      path: '/admin/guru/mapel/:id',
+      component: ListGuru
+    },
+    {
       path: '/admin/kelas',
       name: 'List Kelas',
       component: Kelas

@@ -73,20 +73,22 @@ export default {
     // desserts: [],
     editedIndex: -1,
     editedItem: {
-      siswa: 0,
+      // siswa: 0,
       kelas: "",
       waliKelas: ""
     },
     defaultItem: {
-      siswa: 0,
+      // siswa: 0,
       kelas: "",
       waliKelas: ""
     }
   }),
   computed: {
-    ...mapGetters({
-      desserts: "kelas/dataKelas",
-      teacher: "teacher/teachersData"
+    ...mapGetters("kelas", {
+      desserts: "classesData"
+    }),
+    ...mapGetters("teacher", {
+      teacher: "teachersData"
     }),
     formTitle() {
       return this.editedIndex === -1 ? "Tambah Kelas" : "Edit Kelas";
@@ -114,7 +116,7 @@ export default {
       this.dialog = false;
       setTimeout(() => {
         this.editedItem = Object.assign({}, this.defaultItem);
-        this.editedIndex = -1;
+        this.editedIndex = -1
       }, 300);
     },
     lihatKelas(idkelas) {
@@ -122,10 +124,13 @@ export default {
     },
     save() {
       if (this.editedIndex > -1) {
-        Object.assign(this.desserts[this.editedIndex], this.editedItem);
+        this.$store.dispatch("kelas/UPDATE_Data", this.editedItem);
+
+        // Object.assign(this.desserts[this.editedIndex], this.editedItem);
       } else {
-        this.account = this.username;
-        this.desserts.push(this.editedItem);
+        // this.account = this.username;
+        // this.desserts.push(this.editedItem);
+        this.$store.dispatch("kelas/SET_Data", this.editedItem);
       }
       this.close();
     }

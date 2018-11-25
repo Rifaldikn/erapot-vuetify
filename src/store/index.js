@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-// import {db} from "../main"
 import app from './modules/app'
 import school from './modules/school'
 import teacher from './modules/teacher'
 import kelas from './modules/kelas'
 import student from './modules/student'
+import mapel from './modules/mapel'
 Vue.use(Vuex)
 export default new Vuex.Store({
   modules: {
@@ -13,6 +13,7 @@ export default new Vuex.Store({
     school,
     teacher,
     kelas,
-    student
+    student,
+    mapel
   }
 })

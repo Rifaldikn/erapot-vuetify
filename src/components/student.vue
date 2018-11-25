@@ -15,10 +15,10 @@
             <v-container grid-list-md>
               <v-layout wrap>
                 <v-flex xs12 sm6>
-                  <v-text-field v-model="editedItem.nis" label="NIS" disabled></v-text-field>
+                  <v-text-field v-model="editedItem.nis" label="NIS" :disabled="editedIndex > -1"></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm6>
-                  <v-text-field v-model="editedItem.nisn" label="NISN" disabled></v-text-field>
+                  <v-text-field v-model="editedItem.nisn" label="NISN" :disabled="editedIndex > -1"></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm12>
                   <v-text-field v-model="editedItem.studentName" label="NAMA"></v-text-field>
@@ -121,12 +121,12 @@ export default {
     formTitle() {
       return this.editedIndex === -1 ? "Tambah murid" : "Edit murid";
     },
-    ...mapGetters("kelas", {
-      kelas: "dataKelas"
-    }),
     // ...mapGetters("student", {
-    //   desserts: "studentData"
+    //   desserts: "studentsData"
     // }),
+    ...mapGetters("kelas", {
+      kelas: "classesData"
+    }),
     desserts() {
       if (!this.$route.params.id) {
         return this.$store.getters["student/studentData"];
@@ -151,9 +151,10 @@ export default {
     },
 
     deleteItem(item) {
-      const index = this.desserts.indexOf(item);
+      // const index = this.desserts.indexOf(item);
       confirm("Are you sure you want to delete this item?") &&
-        this.desserts.splice(index, 1);
+        // this.desserts.splice(index, 1);
+        this.$store.dispatch("student/DELETE_Data", item)
     },
 
     close() {

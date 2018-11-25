@@ -15,7 +15,7 @@
                         <v-container grid-list-md >
                             <v-layout wrap >
                                 <v-flex xs12 sm6>
-                                    <v-text-field v-model="editedItem.nip" label="NIP"></v-text-field>
+                                    <v-text-field v-model="editedItem.nip" label="NIP" :disabled="editedIndex > -1"></v-text-field>
                                 </v-flex>
                                 <v-flex xs12 sm6>
                                     <v-text-field v-model="editedItem.teacherName" label="NAMA"></v-text-field>
@@ -112,9 +112,15 @@ export default {
     formTitle() {
       return this.editedIndex === -1 ? "Tambah Guru" : "Edit Guru";
     },
-    ...mapGetters("teacher", {
-      desserts: "teachersData"
-    })
+    desserts() {
+      if (!this.$route.params.id) {
+        return this.$store.getters["teacher/teachersData"];
+      } else {
+        return this.$store.getters["teacher/teachersData"].filter(
+          e => e.kelas == this.$route.params.id
+        );
+      }
+    }
   },
   watch: {
     dialog(val) {
@@ -129,9 +135,10 @@ export default {
     },
 
     deleteItem(item) {
-      const index = this.desserts.indexOf(item);
+    //   const index = this.desserts.indexOf(item);
       confirm("Are you sure you want to delete this item?") &&
-        this.desserts.splice(index, 1);
+        // this.desserts.splice(index, 1);
+        this.$store.dispatch("teacher/DELETE_Data", item)
     },
 
     close() {

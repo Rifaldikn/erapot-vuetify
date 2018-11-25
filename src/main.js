@@ -38,10 +38,12 @@ Vue.config.productionTip = false
 new Vue({
   db,
   store,
-  created() {
+  created () {
     this.$store.dispatch('school/GET_Data')
     this.$store.dispatch('teacher/GET_Data')
     this.$store.dispatch('student/GET_Data')
+    this.$store.dispatch('kelas/GET_Data')
+    this.$store.dispatch('mapel/GET_Data')
   },
   el: '#app',
   components: { App },
