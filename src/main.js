@@ -44,6 +44,7 @@ new Vue({
     this.$store.dispatch('student/GET_Data')
     this.$store.dispatch('kelas/GET_Data')
     this.$store.dispatch('mapel/GET_Data')
+    this.$store.dispatch('jenisPenilaian/GET_Data')
   },
   el: '#app',
   components: { App },

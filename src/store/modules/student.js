@@ -38,7 +38,7 @@ const actions = {
           // console.log(snapshot.doc.data())
           temp.push(doc.data())
         })
-        console.log(temp)
+        // console.log(temp)
         commit('INIT_Data', temp)
       })
       .catch(err => {
@@ -66,7 +66,7 @@ const actions = {
       })
   },
   DELETE_Data ({ dispatch }, payload) {
-    console.log(payload)
+    // console.log(payload)
     db.collection('students')
       .doc(payload.nis)
       .delete()

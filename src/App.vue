@@ -105,7 +105,7 @@ export default {
           text: "Jenis Penilaian",
           path: "/admin/jenispenilaian"
         },
-        { icon: "settings", text: "Settings", path: "/admin/settings" }
+        // { icon: "settings", text: "Settings", path: "/admin/settings" }
       ]
     };
   },

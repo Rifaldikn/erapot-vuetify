@@ -1,39 +1,39 @@
 import { db } from '../../main';
 const state = {
-  classesData: []
+  jenisPenilaian: []
 }
 
 const getters = {
-  classesData: state => state.classesData
+  jenisPenilaian: state => state.jenisPenilaian
 }
 
 const mutations = {
   SET_Data (state, payload) {
-    state.classesData.push(payload)
+    state.jenisPenilaian.push(payload)
   },
   INIT_Data (state, payload) {
-    state.classesData = payload
+    state.jenisPenilaian = payload
   }
 }
 
 const actions = {
   SET_Data ({ commit }, payload) {
     // console.log(payload)
-    var primaryKey = ""
-      while (primaryKey.length < 6) {
-        var k = (Math.random() * 122 )+ 48
-        if (k > 48 && k < 57) {
-          primaryKey += (String.fromCharCode(k))
-          k++
-        } else if (k > 65 && k < 90) {
-          primaryKey += (String.fromCharCode(k))
-          k++
-        }
+    var keyId = '';
+    while (keyId.length < 6) {
+      var k = Math.random() * 122 + 48
+      if (k > 48 && k < 57) {
+        keyId += String.fromCharCode(k)
+        k++
+      } else if (k > 65 && k < 90) {
+        keyId += String.fromCharCode(k)
+        k++
       }
+    }
     // console.log("Primary Key: " + primaryKey)
 
-    db.collection('classes')
-      .doc(payload.kelas)
+    db.collection('jenisPenilaian')
+      .doc(payload.jenis)
       .set(payload)
       .then(data => {
         commit('SET_Data', payload)
@@ -43,7 +43,7 @@ const actions = {
       })
   },
   GET_Data ({ commit }) {
-    db.collection('classes')
+    db.collection('jenisPenilaian')
       .get()
       .then(snapshot => {
         var temp = []
@@ -58,26 +58,27 @@ const actions = {
       })
   },
   UPDATE_Data ({ dispatch }, payload) {
-    // console.log(payload)
-    db.collection('classes')
-      .doc(payload.kelas)
-      .get()
-      .then(function (doc) {
-        if (doc && doc.exists) {
-          db.collection('classes')
-            .doc(payload.kelas)
-            .set(payload)
+    console.log(payload.old.jenis)
+    db.collection('jenisPenilaian')
+      .doc(payload.old.jenis)
+      .delete()
+      .then(() => {
+        db.collection('jenisPenilaian')
+            .doc(payload.new.jenis)
+            .set(payload.new)
             .then(() => {
               dispatch('GET_Data')
               alert('Edited')
             })
-        }
+      })
+      .catch(err => {
+        console.log('Error getting documents', err)
       })
   },
   DELETE_Data ({ dispatch }, payload) {
     // console.log(payload)
-    db.collection('classes')
-      .doc(payload.kelas)
+    db.collection('jenisPenilaian')
+      .doc(payload)
       .delete()
       .then(() => {
         dispatch('GET_Data')

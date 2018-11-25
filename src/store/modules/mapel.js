@@ -18,7 +18,7 @@ const mutations = {
 
 const actions = {
   SET_Data ({ commit }, payload) {
-    console.log(payload)
+    // console.log(payload)
     db.collection('subject')
       .doc(payload.subject)
       .set(payload)
@@ -37,7 +37,7 @@ const actions = {
         snapshot.forEach(doc => {
           temp.push(doc.data())
         })
-        console.log(temp)
+        // console.log(temp)
         commit('INIT_Data', temp)
       })
       .catch(err => {
@@ -45,14 +45,14 @@ const actions = {
       })
   },
   UPDATE_Data ({ dispatch }, payload) {
-    console.log(payload)
+    // console.log(payload)
     db.collection('subject')
       .doc(payload.subject)
       .get()
       .then(function (doc) {
         if (doc && doc.exists) {
           db.collection('subject')
-            .doc(payload.nip)
+            .doc(payload.subject)
             .set(payload)
             .then(() => {
               dispatch('GET_Data')
@@ -64,7 +64,7 @@ const actions = {
   DELETE_Data ({ dispatch }, payload) {
     // console.log(payload)
     db.collection('subject')
-      .doc(payload.username)
+      .doc(payload.subject)
       .delete()
       .then(() => {
         dispatch('GET_Data')

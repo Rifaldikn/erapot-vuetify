@@ -15,7 +15,7 @@
             <v-container grid-list-md>
               <v-layout wrap>
                 <v-flex xs12 sm6>
-                  <v-text-field v-model="editedItem.subject" label="Mata Pelajaran"></v-text-field>
+                  <v-text-field v-model="editedItem.subject" label="Mata Pelajaran" :disabled="!editedItem > -1"></v-text-field>
                 </v-flex>
                  <v-flex xs12 sm6>
                   <v-text-field v-model="editedItem.passGrade" label="KKM"></v-text-field>

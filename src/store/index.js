@@ -6,6 +6,8 @@ import teacher from './modules/teacher'
 import kelas from './modules/kelas'
 import student from './modules/student'
 import mapel from './modules/mapel'
+import jenisPenilaian from './modules/jenisPenilaian'
+
 Vue.use(Vuex)
 export default new Vuex.Store({
   modules: {
@@ -14,6 +16,7 @@ export default new Vuex.Store({
     teacher,
     kelas,
     student,
-    mapel
+    mapel,
+    jenisPenilaian
   }
 })

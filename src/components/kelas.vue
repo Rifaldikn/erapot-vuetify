@@ -15,7 +15,7 @@
             <v-container grid-list-md>
               <v-layout wrap>
                 <v-flex xs12>
-                  <v-text-field v-model="editedItem.kelas" label="Kelas"></v-text-field>
+                  <v-text-field v-model="editedItem.kelas" label="Kelas" :disabled="!editedItem > -1"></v-text-field>
                   
                   <v-select
                     :items="this.teacher.map(a => a.teacherName)"

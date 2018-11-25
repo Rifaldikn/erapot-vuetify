@@ -18,7 +18,7 @@ const mutations = {
 
 const actions = {
   SET_Data ({ commit }, payload) {
-    console.log(payload)
+    // console.log(payload)
     db.collection('teachers')
       .doc(payload.nip)
       .set(payload)
@@ -37,7 +37,7 @@ const actions = {
         snapshot.forEach(doc => {
           temp.push(doc.data())
         })
-        console.log(temp)
+        // console.log(temp)
         commit('INIT_Data', temp)
       })
       .catch(err => {
@@ -45,7 +45,7 @@ const actions = {
       })
   },
   UPDATE_Data ({ dispatch }, payload) {
-    console.log(payload)
+    // console.log(payload)
     db.collection('teachers')
       .doc(payload.nip)
       .get()

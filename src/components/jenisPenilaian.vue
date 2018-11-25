@@ -51,9 +51,9 @@
           </v-icon>
         </td>
       </template>
-      <template slot="no-data">
+      <!-- <template slot="no-data">
         <v-btn color="primary" @click="initialize">Reset</v-btn>
-      </template>
+      </template> -->
     </v-data-table>
   </div>
 </template>
@@ -70,28 +70,6 @@ export default {
       { text: "Persentase %", value: "persentase" },
       { text: "Actions", value: "name", sortable: false, align: "center" }
     ],
-    desserts: [
-      {
-        jenis: "UTS",
-        persentase: 0,
-        keterangan: ""
-      },
-      {
-        jenis: "UAS",
-        persentase: 0,
-        keterangan: ""
-      },
-      {
-        jenis: "Penugasan",
-        persentase: 0,
-        keterangan: ""
-      },
-      {
-        jenis: "Keaktifan",
-        persentase: 0,
-        keterangan: ""
-      }
-    ],
     editedIndex: -1,
     editedItem: {
       jenis: "",
@@ -105,9 +83,9 @@ export default {
     }
   }),
   computed: {
-    // ...mapGetters({
-
-    // }),
+    ...mapGetters("jenisPenilaian", {
+      desserts: "jenisPenilaian"
+    }),
     formTitle() {
       return this.editedIndex === -1
         ? "Tambah Jenis Penilaian"
@@ -127,9 +105,10 @@ export default {
     },
 
     deleteItem(item) {
-      const index = this.desserts.indexOf(item);
+      // const index = this.desserts.indexOf(item);
       confirm("Are you sure you want to delete this item?") &&
-        this.desserts.splice(index, 1);
+        // this.desserts.splice(index, 1);
+        this.$store.dispatch("jenisPenilaian/DELETE_Data", item.jenis);
     },
 
     close() {
@@ -141,10 +120,14 @@ export default {
     },
     save() {
       if (this.editedIndex > -1) {
-        Object.assign(this.desserts[this.editedIndex], this.editedItem);
+        this.$store.dispatch("jenisPenilaian/UPDATE_Data", {
+          old: this.desserts[this.editedIndex],
+          new: this.editedItem
+        });
       } else {
-        this.account = this.username;
-        this.desserts.push(this.editedItem);
+        // this.account = this.username;
+        // this.desserts.push(this.editedItem);
+        this.$store.dispatch("jenisPenilaian/SET_Data", this.editedItem);
       }
       this.close();
     }
