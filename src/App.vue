@@ -2,14 +2,14 @@
   <v-app id="inspire">
     <template v-if="!$route.meta.public">
 
-      <v-navigation-drawer width="250" flat  app v-model="drawer">
+      <v-navigation-drawer width="250" flat app v-model="drawer">
         <v-list v-for="item in items" :key="item.text">
 
-          <v-list-tile  :to="{path: item.path}">
+          <v-list-tile :to="{path: item.path}">
             <v-list-tile-action>
               <v-icon>{{item.icon}}</v-icon>
             </v-list-tile-action>
-            <v-list-tile-title >{{item.text}}</v-list-tile-title>
+            <v-list-tile-title>{{item.text}}</v-list-tile-title>
           </v-list-tile>
 
           <v-list-group v-if="item.extended" prepend-icon="account_circle" value="true">
@@ -42,7 +42,7 @@
                 </v-list-tile-action>
               </v-list-tile>
             </v-list-group>
-            
+
           </v-list-group>
         </v-list>
       </v-navigation-drawer>
@@ -60,7 +60,7 @@
         </v-container>
       </v-content>
     </template>
-    
+
     <template v-else>
       <transition>
         <keep-alive>
@@ -75,7 +75,6 @@
 import { mapGetters } from "vuex";
 
 export default {
- 
   data() {
     return {
       drawer: true,
@@ -104,7 +103,7 @@ export default {
           icon: "chrome_reader_mode",
           text: "Jenis Penilaian",
           path: "/admin/jenispenilaian"
-        },
+        }
         // { icon: "settings", text: "Settings", path: "/admin/settings" }
       ]
     };
@@ -114,7 +113,7 @@ export default {
 </script>
 
 <style>
-font-family: "Roboto", sans-serif;
+font-family: 'Roboto', sans-serif;
 
 #page-content {
   background-color: rgb(206, 219, 235);

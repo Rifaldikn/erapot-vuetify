@@ -15,7 +15,7 @@
             <v-container grid-list-md>
               <v-layout wrap>
                 <v-flex xs12>
-                  <v-text-field v-model="editedItem.kelas" label="Kelas" :disabled="!editedItem > -1"></v-text-field>
+                  <v-text-field v-model="editedItem.kelas" label="Kelas" :disabled="editedIndex > -1"></v-text-field>
                   
                   <v-select
                     :items="this.teacher.map(a => a.teacherName)"
@@ -46,7 +46,7 @@
           <v-icon small class="mr-2" @click="editItem(props.item)">
             edit
           </v-icon>
-          <v-icon small @click="deleteItem(props.item)">
+           <v-icon small @click="deleteItem(props.item)">
             delete
           </v-icon>
         </td>
@@ -116,7 +116,7 @@ export default {
       this.dialog = false;
       setTimeout(() => {
         this.editedItem = Object.assign({}, this.defaultItem);
-        this.editedIndex = -1
+        this.editedIndex = -1;
       }, 300);
     },
     lihatKelas(idkelas) {

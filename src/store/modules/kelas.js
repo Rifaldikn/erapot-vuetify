@@ -1,4 +1,4 @@
-import { db } from '../../main';
+import { db } from '../../main'
 const state = {
   classesData: []
 }
@@ -19,17 +19,17 @@ const mutations = {
 const actions = {
   SET_Data ({ commit }, payload) {
     // console.log(payload)
-    var primaryKey = ""
-      while (primaryKey.length < 6) {
-        var k = (Math.random() * 122 )+ 48
-        if (k > 48 && k < 57) {
-          primaryKey += (String.fromCharCode(k))
-          k++
-        } else if (k > 65 && k < 90) {
-          primaryKey += (String.fromCharCode(k))
-          k++
-        }
+    var primaryKey = ''
+    while (primaryKey.length < 6) {
+      var k = Math.random() * 122 + 48
+      if (k > 48 && k < 57) {
+        primaryKey += String.fromCharCode(k)
+        k++
+      } else if (k > 65 && k < 90) {
+        primaryKey += String.fromCharCode(k)
+        k++
       }
+    }
     // console.log("Primary Key: " + primaryKey)
 
     db.collection('classes')

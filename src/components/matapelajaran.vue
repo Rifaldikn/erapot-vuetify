@@ -15,7 +15,7 @@
             <v-container grid-list-md>
               <v-layout wrap>
                 <v-flex xs12 sm6>
-                  <v-text-field v-model="editedItem.subject" label="Mata Pelajaran" :disabled="!editedItem > -1"></v-text-field>
+                  <v-text-field v-model="editedItem.subject" label="Mata Pelajaran" :disabled="editedIndex > -1"></v-text-field>
                 </v-flex>
                  <v-flex xs12 sm6>
                   <v-text-field v-model="editedItem.passGrade" label="KKM"></v-text-field>
@@ -121,12 +121,12 @@ export default {
       } else {
         // this.account = this.username;
         // this.desserts.push(this.editedItem);        this.$store.dispatch("teacher/UPDATE_Data", this.editedItem)
-        this.$store.dispatch("mapel/SET_Data", this.editedItem)
+        this.$store.dispatch("mapel/SET_Data", this.editedItem);
       }
       this.close();
     },
     lihatGuru(idMapel) {
-      this.$router.push("/admin/guru/mapel/" + idMapel)
+      this.$router.push("/admin/guru/mapel/" + idMapel);
     }
   }
 };
