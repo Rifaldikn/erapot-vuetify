@@ -5,7 +5,7 @@
       <!-- <v-divider class="mx-2" inset vertical></v-divider> -->
       <v-spacer></v-spacer>
       <v-dialog v-model="dialog" max-width="720px">
-        <v-btn slot="activator" color="primary" dark class="mb-2">Tambah Murid</v-btn>
+        <v-btn slot="activator" color="primary" dark round class="mb-2">Tambah Murid</v-btn>
         <v-card>
           <v-card-title>
             <span class="headline">{{ formTitle }}</span>
@@ -30,11 +30,24 @@
                   <v-text-field v-model="editedItem.birthDate" label="TANGGAL LAHIR"></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm6>
-                  <v-select :items="formITems.gender" label="Jenis Kelamin" v-model="editedItem.gender" dense box
-                    required="true"></v-select>
+                  <v-select
+                    :items="formITems.gender"
+                    label="Jenis Kelamin"
+                    v-model="editedItem.gender"
+                    dense
+                    box
+                    required="true"
+                  ></v-select>
                 </v-flex>
                 <v-flex xs12 sm6>
-                  <v-select :items="kelas.map(a => a.kelas).sort()" label="Kelas" v-model="editedItem.kelas" dense box required="true"></v-select>
+                  <v-select
+                    :items="kelas.map(a => a.kelas).sort()"
+                    label="Kelas"
+                    v-model="editedItem.kelas"
+                    dense
+                    box
+                    required="true"
+                  ></v-select>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -57,12 +70,8 @@
         <td class="text-xs-">{{ props.item.gender}}</td>
         <td class="text-xs-left">{{ props.item.birthPlace + ", "+ props.item.birthDate }}</td>
         <td class="justify-center layout px-0">
-          <v-icon small class="mr-2" @click="editItem(props.item)">
-            edit
-          </v-icon>
-          <v-icon small @click="deleteItem(props.item)">
-            delete
-          </v-icon>
+          <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
+          <v-icon small @click="deleteItem(props.item)">delete</v-icon>
         </td>
       </template>
     </v-data-table>

@@ -5,7 +5,7 @@
       <!-- <v-divider class="mx-2" inset vertical></v-divider> -->
       <v-spacer></v-spacer>
       <v-dialog v-model="dialog" max-width="600px">
-        <v-btn slot="activator" color="primary" dark class="mb-2">Tambah Jenis Penialaian</v-btn>
+        <v-btn slot="activator" color="primary" round dark class="mb-2">Tambah Jenis Penialaian</v-btn>
         <v-card>
           <v-card-title>
             <span class="headline">{{ formTitle }}</span>
@@ -21,9 +21,9 @@
                     solo
                     name="input-7-4"
                     label="Keterangan"
-                    value=""
+                    value
                     v-model="editedItem.keterangan"
-                  ></v-textarea>                  
+                  ></v-textarea>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -43,17 +43,13 @@
         <td>{{ props.item.keterangan }}</td>
         <td>{{ props.item.persentase }}</td>
         <td class="justify-center layout px-0">
-          <v-icon small class="mr-2" @click="editItem(props.item)">
-            edit
-          </v-icon>
-          <v-icon small @click="deleteItem(props.item)">
-            delete
-          </v-icon>
+          <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
+          <v-icon small @click="deleteItem(props.item)">delete</v-icon>
         </td>
       </template>
       <!-- <template slot="no-data">
         <v-btn color="primary" @click="initialize">Reset</v-btn>
-      </template> -->
+      </template>-->
     </v-data-table>
   </div>
 </template>
@@ -108,7 +104,7 @@ export default {
       // const index = this.desserts.indexOf(item);
       confirm("Are you sure you want to delete this item?") &&
         // this.desserts.splice(index, 1);
-        this.$store.dispatch("jenisPenilaian/DELETE_Data", item.jenis);
+        this.$store.dispatch("jenisPenilaian/DELETE_Data", item);
     },
 
     close() {

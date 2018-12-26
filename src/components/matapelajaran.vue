@@ -5,7 +5,7 @@
       <!-- <v-divider class="mx-2" inset vertical></v-divider> -->
       <v-spacer></v-spacer>
       <v-dialog v-model="dialog" max-width="720px">
-        <v-btn slot="activator" color="primary" dark class="mb-2">Tambah Mata Pelajaran</v-btn>
+        <v-btn slot="activator" color="primary" round dark class="mb-2">Tambah Mata Pelajaran</v-btn>
         <v-card>
           <v-card-title>
             <span class="headline">{{ formTitle }}</span>
@@ -15,9 +15,13 @@
             <v-container grid-list-md>
               <v-layout wrap>
                 <v-flex xs12 sm6>
-                  <v-text-field v-model="editedItem.subject" label="Mata Pelajaran" :disabled="editedIndex > -1"></v-text-field>
+                  <v-text-field
+                    v-model="editedItem.subject"
+                    label="Mata Pelajaran"
+                    :disabled="editedIndex > -1"
+                  ></v-text-field>
                 </v-flex>
-                 <v-flex xs12 sm6>
+                <v-flex xs12 sm6>
                   <v-text-field v-model="editedItem.passGrade" label="KKM"></v-text-field>
                 </v-flex>
               </v-layout>
@@ -39,17 +43,13 @@
         <td class="justify-center layout px-0">
           <v-btn color="success" @click="lihatGuru(props.item.subject)">Lihat Guru</v-btn>
 
-          <v-icon small class="mr-2" @click="editItem(props.item)">
-            edit
-          </v-icon>
-          <v-icon small @click="deleteItem(props.item)">
-            delete
-          </v-icon>
+          <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
+          <v-icon small @click="deleteItem(props.item)">delete</v-icon>
         </td>
       </template>
       <!-- <template slot="no-data">
         <v-btn color="primary" @click="initialize">Reset</v-btn>
-      </template> -->
+      </template>-->
     </v-data-table>
   </div>
 </template>
@@ -103,7 +103,8 @@ export default {
     deleteItem(item) {
       const index = this.desserts.indexOf(item);
       confirm("Are you sure you want to delete this item?") &&
-        this.desserts.splice(index, 1);
+        // this.desserts.splice(index, 1);
+        this.$store.dispatch('mapel/DELETE_Data', item)
     },
 
     close() {

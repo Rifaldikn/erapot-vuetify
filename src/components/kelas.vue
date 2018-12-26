@@ -2,10 +2,9 @@
   <div>
     <v-toolbar color="white">
       <v-toolbar-title>Daftar Kelas</v-toolbar-title>
-      <!-- <v-divider class="mx-2" inset vertical></v-divider> -->
       <v-spacer></v-spacer>
       <v-dialog v-model="dialog" max-width="420px">
-        <v-btn slot="activator" color="primary" dark class="mb-2">Tambah Kelas</v-btn>
+        <v-btn slot="activator" color="primary" dark round class="mb-2">Tambah Kelas</v-btn>
         <v-card>
           <v-card-title>
             <span class="headline">{{ formTitle }}</span>
@@ -15,14 +14,17 @@
             <v-container grid-list-md>
               <v-layout wrap>
                 <v-flex xs12>
-                  <v-text-field v-model="editedItem.kelas" label="Kelas" :disabled="editedIndex > -1"></v-text-field>
-                  
+                  <v-text-field
+                    v-model="editedItem.kelas"
+                    label="Kelas"
+                    :disabled="editedIndex > -1"
+                  ></v-text-field>
+
                   <v-select
                     :items="this.teacher.map(a => a.teacherName)"
                     label="Wali Kelas"
                     v-model="editedItem.waliKelas"
                   ></v-select>
-               
                 </v-flex>
               </v-layout>
             </v-container>
@@ -43,17 +45,13 @@
         <td>{{ props.item.waliKelas }}</td>
         <td class="justify-center layout px-0">
           <v-btn color="success" @click="lihatKelas(props.item.kelas)">Lihat Siswa</v-btn>
-          <v-icon small class="mr-2" @click="editItem(props.item)">
-            edit
-          </v-icon>
-           <v-icon small @click="deleteItem(props.item)">
-            delete
-          </v-icon>
+          <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
+          <v-icon small @click="deleteItem(props.item)">delete</v-icon>
         </td>
       </template>
       <!-- <template slot="no-data">
         <v-btn color="primary" @click="initialize">Reset</v-btn>
-      </template> -->
+      </template>-->
     </v-data-table>
   </div>
 </template>
