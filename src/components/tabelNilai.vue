@@ -1,55 +1,39 @@
 <template>
   <div>
-    <v-data-table :headers="headers" :items="desserts">
+    <v-data-table :headers="headers" :items="desserts" :loading="isloading">
       <template slot="items" slot-scope="props">
-        <td>
+        <td v-for="(value, key) in props.item">
           <v-edit-dialog
-            :return-value.sync="props.item.name"
+            v-if="key != 'name'"
+            :return-value.sync.number="props.item[key] "
             lazy
+            v-on="{ click: key != 'name' ? open : null }"
             @save="save"
             @cancel="cancel"
-            @open="open"
             @close="close"
           >
-            {{ props.item.name }}
+            {{ value }}
             <v-text-field
               slot="input"
-              v-model="props.item.name"
-              :rules="[max25chars]"
+              v-model.number="props.item[key]"
               label="Edit"
               single-line
               counter
             ></v-text-field>
           </v-edit-dialog>
+          <div v-else>{{value}}</div>
         </td>
-        <td class="text-xs-right">{{ props.item.calories }}</td>
-        <td class="text-xs-right">{{ props.item.fat }}</td>
-        <td class="text-xs-right">{{ props.item.carbs }}</td>
-        <td class="text-xs-right">{{ props.item.protein }}</td>
-        <td class="text-xs-right">
-          <v-edit-dialog
-            :return-value.sync="props.item.iron"
-            large
-            lazy
-            persistent
-            @save="save"
-            @cancel="cancel"
-            @open="open"
-            @close="close"
-          >
-            <div>{{ props.item.iron }}</div>
-            <div slot="input" class="mt-3 title">Update Iron</div>
-            <v-text-field
-              slot="input"
-              v-model="props.item.iron"
-              :rules="[max25chars]"
-              label="Edit"
-              single-line
-              counter
-              autofocus
-            ></v-text-field>
-          </v-edit-dialog>
+      </template>
+      <template slot="footer">
+        <td v-for="(header, key) in headers" v-if="header.text != 'Nama'">
+          <v-tooltip bottom>
+            <span>Delete nilai {{header.text}}</span>
+          </v-tooltip>
+          <v-btn slot="activator" icon flat color="red" @click="deleteKolom(header.value)">
+            <v-icon>delete</v-icon>
+          </v-btn>
         </td>
+        <td v-else></td>
       </template>
     </v-data-table>
 
@@ -61,140 +45,77 @@
 </template>
 
 <script>
-  export default {
-    data () {
-      return {
-        snack: false,
-        snackColor: '',
-        snackText: '',
-        max25chars: v => v.length <= 25 || 'Input too long!',
-        pagination: {},
-        headers: [
-          {
-            text: 'Nama Siswa',
-            align: 'left',
-            sortable: false,
-            value: 'name'
-          },
-          { text: 'Jenis Penilaian', value: 'calories' },
-          { text: 'Jenis Penilaian', value: 'fat' },
-          { text: 'Carbs (g)', value: 'carbs' },
-          { text: 'Protein (g)', value: 'protein' },
-          { text: 'Iron (%)', value: 'iron' }
-        ],
-        desserts: [
-          {
-            value: false,
-            name: 'Frozen Yogurt',
-            calories: 159,
-            fat: 6.0,
-            carbs: 24,
-            protein: 4.0,
-            iron: '1%'
-          },
-          {
-            value: false,
-            name: 'Ice cream sandwich',
-            calories: 237,
-            fat: 9.0,
-            carbs: 37,
-            protein: 4.3,
-            iron: '1%'
-          },
-          {
-            value: false,
-            name: 'Eclair',
-            calories: 262,
-            fat: 16.0,
-            carbs: 23,
-            protein: 6.0,
-            iron: '7%'
-          },
-          {
-            value: false,
-            name: 'Cupcake',
-            calories: 305,
-            fat: 3.7,
-            carbs: 67,
-            protein: 4.3,
-            iron: '8%'
-          },
-          {
-            value: false,
-            name: 'Gingerbread',
-            calories: 356,
-            fat: 16.0,
-            carbs: 49,
-            protein: 3.9,
-            iron: '16%'
-          },
-          {
-            value: false,
-            name: 'Jelly bean',
-            calories: 375,
-            fat: 0.0,
-            carbs: 94,
-            protein: 0.0,
-            iron: '0%'
-          },
-          {
-            value: false,
-            name: 'Lollipop',
-            calories: 392,
-            fat: 0.2,
-            carbs: 98,
-            protein: 0,
-            iron: '2%'
-          },
-          {
-            value: false,
-            name: 'Honeycomb',
-            calories: 408,
-            fat: 3.2,
-            carbs: 87,
-            protein: 6.5,
-            iron: '45%'
-          },
-          {
-            value: false,
-            name: 'Donut',
-            calories: 452,
-            fat: 25.0,
-            carbs: 51,
-            protein: 4.9,
-            iron: '22%'
-          },
-          {
-            value: false,
-            name: 'KitKat',
-            calories: 518,
-            fat: 26.0,
-            carbs: 65,
-            protein: 7,
-            iron: '6%'
-          }
-        ]
+export default {
+  data() {
+    return {
+      snack: false,
+      snackColor: "",
+      snackText: "",
+      max25chars: v => v.length <= 25 || "Input too long!",
+      pagination: {},
+      isloading: false,
+      headers: [
+        {
+          text: "Nama",
+          value: "nama"
+        },
+        { text: "UAS", value: "uas1" },
+        { text: "UTS", value: "uts" },
+        { text: "Ulangan Harian 1", value: "uh1" },
+        { text: "Ulangan Harian 2", value: "uh2" },
+        { text: "Tugas Harian 1", value: "th1" }
+      ],
+      desserts: [
+        {
+          nama: "Rifaldi Kusnawan",
+          uas1: 100,
+          uts: 90,
+          uh1: 80,
+          uh2: 70,
+          th1: 60
+        },
+        {
+          nama: "Genjiee",
+          uas1: 100,
+          uts: 90,
+          uh1: 80,
+          uh2: 70,
+          th1: 60
+        }
+      ]
+    };
+  },
+  methods: {
+    save() {
+      this.snack = true;
+      this.snackColor = "success";
+      this.snackText = "Data saved";
+    },
+    cancel() {
+      this.snack = true;
+      this.snackColor = "error";
+      this.snackText = "Canceled";
+    },
+    open(key) {
+      console.log(key);
+      this.$delete(this.finds, index);
+      if (key != "name") {
+        this.snack = true;
+        this.snackColor = "info";
+        this.snackText = "Dialog opened";
       }
     },
-    methods: {
-      save () {
-        this.snack = true
-        this.snackColor = 'success'
-        this.snackText = 'Data saved'
-      },
-      cancel () {
-        this.snack = true
-        this.snackColor = 'error'
-        this.snackText = 'Canceled'
-      },
-      open () {
-        this.snack = true
-        this.snackColor = 'info'
-        this.snackText = 'Dialog opened'
-      },
-      close () {
-        console.log('Dialog closed')
-      }
+    close() {
+      // console.log("Dialog closed");
+    },
+    deleteKolom(key) {
+      // console.log(key);
+      this.headers.splice(this.headers.findIndex(item => item.value == key), 1);
+      this.desserts.forEach((v, index) => {
+        console.log(v)
+        delete v[key];
+      });
     }
   }
+};
 </script>
