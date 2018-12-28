@@ -1,31 +1,49 @@
 <template>
   <div>
-    <v-data-table :headers="headers" :items="desserts" :loading="isloading">
+    <v-data-table
+      :headers="headers"
+      :items="desserts"
+      :loading="isloading"
+      :rows-per-page-items="pagination.rowsPerPageItems"
+      :total-items="pagination.totalItems"
+      :pagination.sync="pagination"
+    >
+      <template slot="header" slot-scope="props">
+        <tr>
+          <th v-for="header in props.headers" :key="header.text">{{ header.text }}</th>
+        </tr>
+      </template>
+
       <template slot="items" slot-scope="props">
-        <td v-for="(value, key) in props.item">
+        <td class="text-xs-left">{{props.item.nama}}</td>
+        <td class="text-xs-left" v-for="(nilai, kunci) in props.item" v-if="kunci != 'nama'">
+          <!-- <span v-for="(value, index) in nilai" :key="index">{{props.item[kunci][index]}}</span> -->
           <v-edit-dialog
-            v-if="key != 'name'"
-            :return-value.sync.number="props.item[key] "
+            v-for="(value, index) in nilai"
+            :key="index"
+            :return-value.sync="props.item[kunci][index]"
             lazy
-            v-on="{ click: key != 'name' ? open : null }"
             @save="save"
             @cancel="cancel"
+            @open="open"
             @close="close"
           >
             {{ value }}
             <v-text-field
               slot="input"
-              v-model.number="props.item[key]"
+              v-model="props.item[kunci][index]"
+              :rules="[max25chars]"
               label="Edit"
               single-line
               counter
             ></v-text-field>
           </v-edit-dialog>
-          <div v-else>{{value}}</div>
         </td>
       </template>
+
       <template slot="footer">
-        <td v-for="(header, key) in headers" v-if="header.text != 'Nama'">
+        <td v-for="(header,index, key) in headers" v-if="header.value != 'nama'">
+          {{index}}
           <v-tooltip bottom>
             <span>Delete nilai {{header.text}}</span>
           </v-tooltip>
@@ -52,38 +70,33 @@ export default {
       snackColor: "",
       snackText: "",
       max25chars: v => v.length <= 25 || "Input too long!",
-      pagination: {},
       isloading: false,
       headers: [
         {
           text: "Nama",
-          value: "nama"
+          value: "nama",
+          sortable: false
         },
-        { text: "UAS", value: "uas1" },
-        { text: "UTS", value: "uts" },
-        { text: "Ulangan Harian 1", value: "uh1" },
-        { text: "Ulangan Harian 2", value: "uh2" },
-        { text: "Tugas Harian 1", value: "th1" }
-      ],
-      desserts: [
-        {
-          nama: "Rifaldi Kusnawan",
-          uas1: 100,
-          uts: 90,
-          uh1: 80,
-          uh2: 70,
-          th1: 60
-        },
-        {
-          nama: "Genjiee",
-          uas1: 100,
-          uts: 90,
-          uh1: 80,
-          uh2: 70,
-          th1: 60
-        }
+        { text: "UAS", value: "uas1", align: "left" }
       ]
+      // desserts: [
+      //   { UAS: [0], nama: "Adhwa Naqila Aldean" },
+      //   { UAS: [0], nama: "Rex Kim" }
+      // ]
     };
+  },
+  computed: {
+    pagination() {
+      return {
+        page: 1,
+        rowsPerPage: 50, // -1 for All
+        totalItems: this.desserts.length,
+        rowsPerPageItems: [10, 25, 50, 100]
+      };
+    },
+    desserts() {
+      return this.$store.getters["penilaian/daftar_penilaian"];
+    }
   },
   methods: {
     save() {
@@ -97,8 +110,6 @@ export default {
       this.snackText = "Canceled";
     },
     open(key) {
-      console.log(key);
-      this.$delete(this.finds, index);
       if (key != "name") {
         this.snack = true;
         this.snackColor = "info";
@@ -112,10 +123,13 @@ export default {
       // console.log(key);
       this.headers.splice(this.headers.findIndex(item => item.value == key), 1);
       this.desserts.forEach((v, index) => {
-        console.log(v)
+        // console.log(v);
         delete v[key];
       });
     }
   }
 };
 </script>
+
+<style>
+</style>

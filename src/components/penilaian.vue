@@ -14,38 +14,19 @@
             ></v-select>
           </v-flex>
 
-          <v-flex shrink xs3 pa-2>
-            <v-select
-              :items="kelas.map(a => a.kelas)"
-              label="Tahun Ajaran"
-              v-model="assignForm.tahunAjaran"
-              @change="searchPenilaian"
-              outline
-            ></v-select>
-          </v-flex>
-          <v-flex xs3>
-            <v-select
-              :items="this.jenisPenilaian.map(a => a.jenis)"
-              label="Jenis Penilaian"
-              outline
-              @change="searchPenilaian"
-              v-model="assignForm.jenisPenilaian"
-            ></v-select>
-          </v-flex>
-          <v-flex>
-            <!-- <v-div> -->
-            <v-btn
-              class="text-xs-center"
-              v-for="item in mapel"
-              :key="item.subject"
-              :value="item.subject"
-              @click="assignForm.mapel = item.subject; searchPenilaian()"
-              color="#1EA8AA"
-              round
-              dark
-            >{{item.subject}}</v-btn>
-            <!-- </v-div> -->
-          </v-flex>
+          <!-- <v-div> -->
+          <v-btn
+            class="text-xs-center"
+            v-for="item in mapel"
+            :key="item.subject"
+            :value="item.subject"
+            @click="assignForm.mapel = item.subject; searchPenilaian()"
+            color="#1EA8AA"
+            round
+            dark
+          >{{item.subject}}</v-btn>
+          <!-- </v-div> -->
+          <!-- </v-flex> -->
         </v-layout>
       </v-container>
     </v-layout>
@@ -64,7 +45,7 @@
               outline
               v-model="add_penilaian"
             ></v-select>
-            <v-btn color="red" dark class="mb-2" round>Tambah Penilaian</v-btn>
+            <v-btn color="red" dark class="mb-2" @click="addPenilaian()" round>Tambah Penilaian</v-btn>
             <v-btn color="primary" dark class="mb-2" round>Cetak</v-btn>
             <v-spacer></v-spacer>
             <v-btn color="green" dark class="mb-2" round>Download Nilai</v-btn>
@@ -113,8 +94,7 @@ export default {
     add_penilaian: "",
     assignForm: {
       kelas: "",
-      mapel: "",
-      jenisPenilaian: ""
+      mapel: ""
     }
   }),
   computed: {},
@@ -124,23 +104,23 @@ export default {
       return this.chipColors[hexColor];
     },
     searchPenilaian() {
-      if (
-        this.assignForm.kelas != "" &&
-        this.assignForm.jenisPenilaian != "" &&
-        this.assignForm.mapel != ""
-      ) {
-        console.log(
-          this.assignForm.kelas,
-          this.assignForm.jenisPenilaian,
-          this.assignForm.mapel
-        );
+      if (this.assignForm.kelas != "" && this.assignForm.mapel != "") {
+        this.$store.dispatch("penilaian/load_penilaian", this.assignForm);
       }
     },
-    // addPenilaian(){
-    //   this.dessert.forEach(element => {
-        
-    //   });
-    // }
+    addPenilaian() {
+      if (this.add_penilaian != "" && this.assignForm.kelas != "" && this.assignForm.mapel != "") {
+        // const key = Object.assign(this.assignForm, this.add_penilaian);
+        const key = {
+          kelas: this.assignForm.kelas,
+          mapel: this.assignForm.mapel,
+          penilaian: this.add_penilaian
+        };
+        console.log(key)
+        this.$store.dispatch("penilaian/add_penilaian", key);
+        this.$store.dispatch("penilaian/load_penilaian", this.assignForm);
+      }
+    }
   }
 };
 </script>

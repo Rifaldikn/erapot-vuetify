@@ -1,10 +1,8 @@
 <template>
   <v-app id="inspire">
     <template v-if="!$route.meta.public">
-
       <v-navigation-drawer width="250" flat app v-model="drawer">
         <v-list v-for="item in items" :key="item.text">
-
           <v-list-tile :to="{path: item.path}">
             <v-list-tile-action>
               <v-icon>{{item.icon}}</v-icon>
@@ -22,7 +20,7 @@
                 <v-list-tile-title>Admin</v-list-tile-title>
               </v-list-tile>
 
-              <v-list-tile v-for="(admin, i) in admins" :key="i" @click="">
+              <v-list-tile v-for="(admin, i) in admins" :key="i" @click>
                 <v-list-tile-title v-text="admin[0]"></v-list-tile-title>
                 <v-list-tile-action>
                   <v-icon v-text="admin[1]"></v-icon>
@@ -35,27 +33,30 @@
                 <v-list-tile-title>Actions</v-list-tile-title>
               </v-list-tile>
 
-              <v-list-tile v-for="(crud, i) in cruds" :key="i" @click="">
+              <v-list-tile v-for="(crud, i) in cruds" :key="i" @click>
                 <v-list-tile-title v-text="crud[0]"></v-list-tile-title>
                 <v-list-tile-action>
                   <v-icon v-text="crud[1]"></v-icon>
                 </v-list-tile-action>
               </v-list-tile>
             </v-list-group>
-
           </v-list-group>
         </v-list>
       </v-navigation-drawer>
 
       <v-toolbar color="blue-grey darken-4" dark fixed app flat>
         <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-        <v-toolbar-title><span class="red--text">e-Rapot</span> v0.00001a</v-toolbar-title>
+        <v-toolbar-title>
+          <span class="red--text">e-Rapot</span> v0.00001a
+        </v-toolbar-title>
       </v-toolbar>
 
       <v-content class="blue-grey lighten-5">
         <v-container fluid>
           <v-fade-transition mode="out-in">
-            <router-view></router-view>
+            <!-- <v-app> -->
+              <router-view></router-view>
+            <!-- </v-app> -->
           </v-fade-transition>
         </v-container>
       </v-content>
@@ -113,7 +114,7 @@ export default {
 </script>
 
 <style>
-font-family: 'Roboto', sans-serif;
+font-family: "Roboto", sans-serif;
 
 #page-content {
   background-color: rgb(206, 219, 235);

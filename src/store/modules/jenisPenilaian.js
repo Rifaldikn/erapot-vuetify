@@ -58,7 +58,7 @@ const actions = {
       });
   },
   UPDATE_Data({ dispatch }, payload) {
-    console.log(payload.old.jenis);
+    // console.log(payload.old.jenis);
     db.collection("jenisPenilaian")
       .doc(payload.old.jenis)
       .delete()
