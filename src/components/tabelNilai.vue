@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- <v-layout> -->
     <v-data-table
       :headers="headers"
       :items="desserts"
@@ -8,20 +9,20 @@
       :total-items="pagination.totalItems"
       :pagination.sync="pagination"
     >
-      <template slot="header" slot-scope="props">
+      <template slot="headers" slot-scope="props">
         <tr>
-          <th v-for="header in props.headers" :key="header.text">{{ header.text }}</th>
+          <th
+            v-for="header in props.headers"
+            :key="header.value"
+            @click="changeSort(header.value)"
+          >{{ header.text }}</th>
         </tr>
       </template>
-
       <template slot="items" slot-scope="props">
         <td class="text-xs-left">{{props.item.nama}}</td>
-        <td class="text-xs-left" v-for="(nilai, kunci) in props.item" v-if="kunci != 'nama'">
-          <!-- <span v-for="(value, index) in nilai" :key="index">{{props.item[kunci][index]}}</span> -->
+        <td class="text-xs-center" v-for="(value , key) in props.item" v-if="key != 'nama'">
           <v-edit-dialog
-            v-for="(value, index) in nilai"
-            :key="index"
-            :return-value.sync="props.item[kunci][index]"
+            :return-value.sync="props.item[key]"
             lazy
             @save="save"
             @cancel="cancel"
@@ -31,7 +32,7 @@
             {{ value }}
             <v-text-field
               slot="input"
-              v-model="props.item[kunci][index]"
+              v-model="props.item[key]"
               :rules="[max25chars]"
               label="Edit"
               single-line
@@ -43,12 +44,12 @@
 
       <template slot="footer">
         <td v-for="(header,index, key) in headers" v-if="header.value != 'nama'">
-          {{index}}
           <v-tooltip bottom>
             <span>Delete nilai {{header.text}}</span>
           </v-tooltip>
-          <v-btn slot="activator" icon flat color="red" @click="deleteKolom(header.value)">
-            <v-icon>delete</v-icon>
+          <v-btn slot="activator" dark color="red" @click="deleteKolom(header.value)">
+            <!-- <v-icon>delete</v-icon> -->
+            Hapus
           </v-btn>
         </td>
         <td v-else></td>
@@ -59,6 +60,7 @@
       {{ snackText }}
       <v-btn flat @click="snack = false">Close</v-btn>
     </v-snackbar>
+    <!-- </v-layout> -->
   </div>
 </template>
 
@@ -70,15 +72,8 @@ export default {
       snackColor: "",
       snackText: "",
       max25chars: v => v.length <= 25 || "Input too long!",
-      isloading: false,
-      headers: [
-        {
-          text: "Nama",
-          value: "nama",
-          sortable: false
-        },
-        { text: "UAS", value: "uas1", align: "left" }
-      ]
+      isloading: false
+
       // desserts: [
       //   { UAS: [0], nama: "Adhwa Naqila Aldean" },
       //   { UAS: [0], nama: "Rex Kim" }
@@ -87,15 +82,70 @@ export default {
   },
   computed: {
     pagination() {
-      return {
+      const y = {
         page: 1,
         rowsPerPage: 50, // -1 for All
         totalItems: this.desserts.length,
         rowsPerPageItems: [10, 25, 50, 100]
       };
+      return y;
     },
     desserts() {
-      return this.$store.getters["penilaian/daftar_penilaian"];
+      var temp = [];
+      var daftar_penilaian = this.$store.getters["penilaian/daftar_penilaian"];
+      daftar_penilaian.forEach(list => {
+        var nilai = {};
+        for (let key in list) {
+          if (key == "nama") {
+            // nilai.unshift({
+            nilai[key] = list[key];
+            // });
+          } else {
+            list[key].forEach((element, index) => {
+              // nilai.push({
+              nilai[`${key}${index}`] = element;
+              // });
+            });
+          }
+        }
+        console.log("nilai", nilai);
+        temp.push(nilai);
+        console.log("temp", temp);
+      });
+
+      return temp;
+    },
+    headers() {
+      // headers: [
+      //   {
+      //     text: "Nama",
+      //     value: "nama",
+      //     sortable: false
+      //   }
+      // ]
+      var temp = [];
+      var x = this.$store.getters["penilaian/daftar_penilaian"][0];
+      console.log(x);
+      for (let key in x) {
+        if (key == "nama") {
+          temp.unshift({
+            text: "Nama Siswa",
+            value: key,
+            sortable: false,
+            width: "10%"
+          });
+        } else {
+          x[key].forEach((element, index) => {
+            temp.push({
+              text: `${key} ${index + 1}`,
+              value: `${key}${index}`,
+              align: "left",
+              sortable: true
+            });
+          });
+        }
+      }
+      return temp;
     }
   },
   methods: {
@@ -132,4 +182,7 @@ export default {
 </script>
 
 <style>
+td {
+  width: 100;
+}
 </style>

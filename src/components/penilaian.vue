@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-layout>
-      <v-container class="white" elevation-4>
+      <v-container fluid class="white" elevation-4>
         <v-toolbar-title>Daftar Nilai Siswa</v-toolbar-title>
         <v-layout wrap row align-center>
           <v-flex shrink xs2 pa-2>
@@ -31,11 +31,11 @@
       </v-container>
     </v-layout>
 
-    <v-container class="white">
+    <v-container fluid class="white">
       <v-subheader
-        v-if="assignForm.kelas && assignForm.jenisPenilaian && assignForm.mapel"
+        v-if="assignForm.kelas && assignForm.mapel"
         class="title red--text"
-      >{{"Kelas " + assignForm.kelas + " / "}} {{assignForm.mapel + " / "}} {{assignForm.jenisPenilaian}}</v-subheader>
+      >{{"Kelas " + assignForm.kelas + " / "}} {{assignForm.mapel}}</v-subheader>
       <v-layout wrap row>
         <v-flex mt-2 row>
           <v-layout row>
@@ -45,7 +45,7 @@
               outline
               v-model="add_penilaian"
             ></v-select>
-            <v-btn color="red" dark class="mb-2" @click="addPenilaian()" round>Tambah Penilaian</v-btn>
+            <v-btn color="blue" dark class="mb-2" @click="addPenilaian()" round>Tambah Penilaian</v-btn>
             <v-btn color="primary" dark class="mb-2" round>Cetak</v-btn>
             <v-spacer></v-spacer>
             <v-btn color="green" dark class="mb-2" round>Download Nilai</v-btn>
@@ -109,14 +109,18 @@ export default {
       }
     },
     addPenilaian() {
-      if (this.add_penilaian != "" && this.assignForm.kelas != "" && this.assignForm.mapel != "") {
+      if (
+        this.add_penilaian != "" &&
+        this.assignForm.kelas != "" &&
+        this.assignForm.mapel != ""
+      ) {
         // const key = Object.assign(this.assignForm, this.add_penilaian);
         const key = {
           kelas: this.assignForm.kelas,
           mapel: this.assignForm.mapel,
           penilaian: this.add_penilaian
         };
-        console.log(key)
+        console.log(key);
         this.$store.dispatch("penilaian/add_penilaian", key);
         this.$store.dispatch("penilaian/load_penilaian", this.assignForm);
       }

@@ -69,22 +69,24 @@ const actions = {
       .collection("daftar_penilaian")
       .doc(kelas)
       .collection(subject);
-    if (getters.daftar_nilai == []) {
+    console.log(getters.daftar_penilaian);
+    if (!getters.daftar_penilaian[0] || !getters.daftar_penilaian[0][jenis_penilaian]) {
       daftar_siswa.forEach(siswa => {
         const new_penilaian = {
           nama: siswa.studentName,
           [jenis_penilaian]: [0]
         };
+        daftar_penilaian
+          .doc(siswa.studentName)
+          .set(new_penilaian, { merge: true })
+          .catch(error => {
+            console.log(error);
+          });
       });
-      daftar_penilaian
-        .doc(siswa.studentName)
-        .set(new_penilaian, { merge: true })
-        .catch(error => {
-          console.log(error);
-        });
     } else {
       getters.daftar_penilaian.forEach(nilai_siswa => {
         // nilai_siswa[subject].push(0)
+        console.log(nilai_siswa);
         nilai_siswa[jenis_penilaian].push(0);
         daftar_penilaian
           .doc(nilai_siswa.nama)
