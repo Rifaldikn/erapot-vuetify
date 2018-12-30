@@ -46,6 +46,7 @@
               v-model="add_penilaian"
             ></v-select>
             <v-btn color="blue" dark class="mb-2" @click="addPenilaian()" round>Tambah Penilaian</v-btn>
+            <v-btn color="#E6247A" dark class="mb-2" @click="update()" round>Simpan</v-btn>
             <v-btn color="primary" dark class="mb-2" round>Cetak</v-btn>
             <v-spacer></v-spacer>
             <v-btn color="green" dark class="mb-2" round>Download Nilai</v-btn>
@@ -108,7 +109,7 @@ export default {
         this.$store.dispatch("penilaian/load_penilaian", this.assignForm);
       }
     },
-    addPenilaian() {
+    async addPenilaian() {
       if (
         this.add_penilaian != "" &&
         this.assignForm.kelas != "" &&
@@ -121,8 +122,13 @@ export default {
           penilaian: this.add_penilaian
         };
         console.log(key);
-        this.$store.dispatch("penilaian/add_penilaian", key);
-        this.$store.dispatch("penilaian/load_penilaian", this.assignForm);
+        await this.$store.dispatch("penilaian/add_penilaian", key);
+        await this.$store.dispatch("penilaian/load_penilaian", this.assignForm);
+      }
+    },
+    async update() {
+      if (window.confirm("Apakah Anda yakin ingin menyimpan data?")) {
+        await this.$store.dispatch("penilaian/update_data");
       }
     }
   }

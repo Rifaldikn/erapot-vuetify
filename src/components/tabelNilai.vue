@@ -11,11 +11,7 @@
     >
       <template slot="headers" slot-scope="props">
         <tr>
-          <th
-            v-for="header in props.headers"
-            :key="header.value"
-            @click="changeSort(header.value)"
-          >{{ header.text }}</th>
+          <th v-for="header in props.headers" :key="header.value">{{ header.text }}</th>
         </tr>
       </template>
       <template slot="items" slot-scope="props">
@@ -65,6 +61,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -73,14 +70,15 @@ export default {
       snackText: "",
       max25chars: v => v.length <= 25 || "Input too long!",
       isloading: false
-
-      // desserts: [
-      //   { UAS: [0], nama: "Adhwa Naqila Aldean" },
-      //   { UAS: [0], nama: "Rex Kim" }
-      // ]
     };
   },
   computed: {
+    headers() {
+      return this.$store.getters["penilaian/headers"];
+    },
+    desserts() {
+      return this.$store.getters["penilaian/desserts"];
+    },
     pagination() {
       const y = {
         page: 1,
@@ -89,63 +87,6 @@ export default {
         rowsPerPageItems: [10, 25, 50, 100]
       };
       return y;
-    },
-    desserts() {
-      var temp = [];
-      var daftar_penilaian = this.$store.getters["penilaian/daftar_penilaian"];
-      daftar_penilaian.forEach(list => {
-        var nilai = {};
-        for (let key in list) {
-          if (key == "nama") {
-            // nilai.unshift({
-            nilai[key] = list[key];
-            // });
-          } else {
-            list[key].forEach((element, index) => {
-              // nilai.push({
-              nilai[`${key}${index}`] = element;
-              // });
-            });
-          }
-        }
-        console.log("nilai", nilai);
-        temp.push(nilai);
-        console.log("temp", temp);
-      });
-
-      return temp;
-    },
-    headers() {
-      // headers: [
-      //   {
-      //     text: "Nama",
-      //     value: "nama",
-      //     sortable: false
-      //   }
-      // ]
-      var temp = [];
-      var x = this.$store.getters["penilaian/daftar_penilaian"][0];
-      console.log(x);
-      for (let key in x) {
-        if (key == "nama") {
-          temp.unshift({
-            text: "Nama Siswa",
-            value: key,
-            sortable: false,
-            width: "10%"
-          });
-        } else {
-          x[key].forEach((element, index) => {
-            temp.push({
-              text: `${key} ${index + 1}`,
-              value: `${key}${index}`,
-              align: "left",
-              sortable: true
-            });
-          });
-        }
-      }
-      return temp;
     }
   },
   methods: {
@@ -170,12 +111,7 @@ export default {
       // console.log("Dialog closed");
     },
     deleteKolom(key) {
-      // console.log(key);
-      this.headers.splice(this.headers.findIndex(item => item.value == key), 1);
-      this.desserts.forEach((v, index) => {
-        // console.log(v);
-        delete v[key];
-      });
+      this.$store.dispatch("penilaian/delete_penilaian", key);
     }
   }
 };
