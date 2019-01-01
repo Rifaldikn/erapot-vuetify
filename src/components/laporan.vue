@@ -21,12 +21,13 @@
               item-text="studentName"
               v-model="assignForm.student"
               label="Nama Siswa"
+              @change="searchPenilaian"
               return-object
               outline
             ></v-select>
           </v-flex>
           <v-flex mb-4>
-            <v-btn color="primary" dark round @click="print">Cetak Nilai</v-btn>
+            <v-btn color="primary" dark round>Cetak Nilai</v-btn>
           </v-flex>
         </v-layout>
       </v-container>
@@ -66,12 +67,20 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(value, index) in nilai">
+                <tr
+                  v-for="(value, index) in nilai"
+                  :class="lulus(sum(hasilNilai[value.subject]), value.passGrade)"
+                >
                   <td class="numberTable">{{index+1}}</td>
                   <td class="mapel">{{value.subject}}</td>
-                  <td>{{value.passGrade}}</td>
-                  <td v-for="jenis in jenisPenilaian">{{value.jenis}}</td>
-                  <td>{{value.totalNilai}}</td>
+                  <td :key="value.passGrade">{{value.passGrade}}</td>
+                  <!-- <td v-for="(hasil, key) in hasilNilai">{{hasil[key]}}</td> -->
+                  <td
+                    v-for="jenis in jenisPenilaian"
+                    v-if="hasilNilai[value.subject] != undefined"
+                  >{{hasilNilai[value.subject][jenis.jenis]}}</td>
+                  <td v-else>0</td>
+                  <td>{{sum(hasilNilai[value.subject])}}</td>
                 </tr>
               </tbody>
             </table>
@@ -108,24 +117,47 @@ export default {
     },
     mapel() {
       return this.$store.getters["mapel/subjectData"];
+    },
+    hasilNilai() {
+      return this.$store.getters["laporan/hasilNilai"];
     }
   },
   methods: {
-    print() {
-      this.$htmlToPaper("printMe");
+    lulus(total, passGrade) {
+      if (total < passGrade) {
+        return "warning";
+      }
     },
     searchPenilaian() {
-      if (this.students == undefined) {
+      if (this.students == undefined && this.kelas == undefined) {
         this.assignForm.kelas = {};
       } else {
         var temp = [];
         this.mapel.forEach(mpl => {
           var nilaiMpl = {};
           Object.assign(nilaiMpl, mpl);
+          this.$store.dispatch("laporan/GET_Nilai", {
+            kelas: this.assignForm.kelas.kelas,
+            student: this.assignForm.student.studentName,
+            mapel: mpl.subject
+          });
           temp.push(nilaiMpl);
         });
         this.nilai = temp;
       }
+    },
+    sum(obj) {
+      var sum = 0;
+      for (var key in obj) {
+        if (obj.hasOwnProperty(key)) {
+          this.jenisPenilaian.forEach(jenis => {
+            if (jenis.jenis == key) {
+              sum += (parseFloat(obj[key]) * Number(jenis.persentase)) / 100;
+            }
+          });
+        }
+      }
+      return sum;
     }
   }
 };
@@ -160,7 +192,9 @@ td:not(.mapel) {
 }
 
 .warning td {
-  background-color: rgb(243, 139, 139);
+  /* background-color: rgb(255, 100, 100); */
+  color: rgb(255, 100, 100);
+  font-weight: bold
 }
 
 th,
@@ -174,34 +208,5 @@ td {
   min-width: 5px;
   text-align: left;
 }
-
-/* th.active {
-  color: #fff;
-}
-
-th.active .arrow {
-  opacity: 1;
-} */
-
-/* .arrow {
-  display: inline-block;
-  vertical-align: middle;
-  width: 0;
-  height: 0;
-  margin-left: 5px;
-  opacity: 0.66;
-}
-
-.arrow.asc {
-  border-left: 4px solid transparent;
-  border-right: 4px solid transparent;
-  border-bottom: 4px solid #fff;
-}
-
-.arrow.dsc {
-  border-left: 4px solid transparent;
-  border-right: 4px solid transparent;
-  border-top: 4px solid #fff;
-} */
 </style>
 
