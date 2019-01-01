@@ -5,6 +5,17 @@ import router from "./router";
 import App from "./App";
 import Vuetify from "vuetify";
 import "vuetify/dist/vuetify.min.css";
+import VueHtmlToPaper from "vue-html-to-paper";
+import css from "vuetify/dist/vuetify.min.css";
+
+//initialize mixin to print html
+const options = {
+  name: "_blank",
+  specs: ["fullscreen=yes", "titlebar=yes", "scrollbars=yes"],
+  styles: ["../dist/static/css/app.d14d1830d29d52e42b2acc5e4c1320f7.css", "vuetify/dist/vuetify.min.css"]
+};
+
+Vue.use(VueHtmlToPaper, options);
 
 // Initialize Firebase
 var config = {

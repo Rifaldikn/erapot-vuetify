@@ -1,7 +1,7 @@
 <template>
   <v-app id="inspire">
     <template v-if="!$route.meta.public">
-      <v-navigation-drawer width="250" flat app v-model="drawer">
+      <v-navigation-drawer width="250" flat app v-model="drawer" class="hidden">
         <v-list v-for="item in items" :key="item.text">
           <v-list-tile :to="{path: item.path}">
             <v-list-tile-action>
@@ -44,18 +44,18 @@
         </v-list>
       </v-navigation-drawer>
 
-      <v-toolbar color="blue-grey darken-4" dark fixed app flat>
+      <v-toolbar color="blue-grey darken-4" dark fixed app flat class="hidden">
         <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
         <v-toolbar-title>
           <span class="red--text">e-Rapot</span> v0.00001a
         </v-toolbar-title>
       </v-toolbar>
 
-      <v-content class="blue-grey lighten-5">
+      <v-content class="blue-grey lighten-5 whiteHidden" >
         <v-container fluid>
           <v-fade-transition mode="out-in">
             <!-- <v-app> -->
-              <router-view></router-view>
+            <router-view></router-view>
             <!-- </v-app> -->
           </v-fade-transition>
         </v-container>
@@ -101,6 +101,11 @@ export default {
           path: "/admin/penilaian"
         },
         {
+          icon: "table_chart",
+          text: "Laporan Siswa",
+          path: "/admin/laporan"
+        },
+        {
           icon: "chrome_reader_mode",
           text: "Jenis Penilaian",
           path: "/admin/jenispenilaian"
@@ -118,5 +123,19 @@ font-family: "Roboto", sans-serif;
 
 #page-content {
   background-color: rgb(206, 219, 235);
+}
+
+@media print {
+  .hidden {
+    display: none !important;
+  }
+ .blue-grey.lighten-5 {
+    background-color: #ffffff!important;
+    border-color: #eceff1!important;
+}
+  /* table {
+    border-radius: 3px;
+    background-color: #42b983;
+  } */
 }
 </style>

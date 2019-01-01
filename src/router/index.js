@@ -12,6 +12,8 @@ import Dashboard from '@/components/dashboard.vue'
 import Settings from '@/components/settings.vue'
 import JenisPenilaian from '@/components/jenisPenilaian.vue'
 import Penilaian from '@/components/penilaian.vue'
+import Laporan from '@/components/laporan.vue'
+
 
 Vue.use(Router)
 
@@ -81,6 +83,10 @@ var router = new Router({
     {
       path: '/admin/penilaian',
       component: Penilaian
+    },
+    {
+      path: '/admin/laporan',
+      component: Laporan
     },
     {
       path: '/admin/jenispenilaian',
