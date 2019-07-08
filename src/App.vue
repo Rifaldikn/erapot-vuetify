@@ -49,6 +49,8 @@
         <v-toolbar-title>
           <span class="red--text">e-Rapot</span> v0.00001a
         </v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-btn dark color="white" outline @click="">Logout</v-btn>
       </v-toolbar>
 
       <v-content class="blue-grey lighten-5 whiteHidden">

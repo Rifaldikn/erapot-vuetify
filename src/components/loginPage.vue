@@ -24,7 +24,16 @@
             <v-card-text>
               <v-form>
                 <v-text-field
+                  v-if="tabModel == 'Signup'"
                   append-icon="person"
+                  name="username"
+                  label="Username"
+                  id="username"
+                  type="text"
+                  v-model="model.username"
+                ></v-text-field>
+                <v-text-field
+                  append-icon="mail"
                   name="Email"
                   label="Email"
                   type="text"
@@ -38,8 +47,9 @@
                   type="password"
                   v-model="model.password"
                 ></v-text-field>
+
                 <v-select
-                  v-if="signup"
+                  v-if="tabModel == 'Login'"
                   :items="items"
                   label="Status Login"
                   v-model="model.statusLogin"
@@ -54,7 +64,7 @@
                 <v-tab-item key="Signup" value="Signup">
                   <v-card flat>
                     <v-card-text>
-                      <v-btn block color="primary" @click="signup">Signup</v-btn>
+                      <v-btn block color="primary" @click="signupAccount">Signup</v-btn>
                     </v-card-text>
                   </v-card>
                 </v-tab-item>
@@ -87,7 +97,8 @@ export default {
     model: {
       email: "",
       password: "",
-      statusLogin: ""
+      statusLogin: "",
+      username: ""
     },
     items: ["Administrator", "Guru"]
   }),
@@ -105,6 +116,19 @@ export default {
           } else if (this.model.statusLogin == "Guru") {
             this.$router.push("/admin");
           }
+        }, 1000);
+      } else {
+        this.alert.status = true;
+        this.alert.msg = "Kolom tidak boleh ada yang kosong";
+        this.loading = false;
+      }
+    },
+    signupAccount() {
+      this.loading = true;
+      if (this.model.username && this.model.password && this.model.email) {
+        setTimeout(() => {
+          this.$router.push("/init");
+          this.$store.dispatch("users/Sigup_Account", this.model);
         }, 1000);
       } else {
         this.alert.status = true;

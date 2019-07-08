@@ -1,4 +1,6 @@
 import { db } from "../../main";
+import firebase from "firebase/app";
+import "firebase/auth";
 const state = {
   account: []
 };
@@ -29,15 +31,11 @@ const actions = {
       .auth()
       .createUserWithEmailAndPassword(payload.email, payload.password)
       .then(user => {
-        var user = firebase.auth().currentUser;
-
         user
           .updateProfile({
             displayName: userInfo.username
           })
           .then(function() {
-            // Update successful.
-            dispatch("users/loginWithEmail", userInfo, { root: true });
             console.log(user);
           })
           .catch(function(error) {
@@ -46,23 +44,18 @@ const actions = {
         // console.log(user);
       })
       .catch(function(error) {
-        // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;
-        // [START_EXCLUDE]
-        commit("app/setErrorMessage", errorMessage, { root: true });
-        store.commit("app/toggleSnackbar", { root: true });
-        console.log(error);
       });
-    db.collection("users")
-      .doc(payload)
-      .set(payload)
-      .then(data => {
-        commit("SET_Data", payload);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    // db.collection("users")
+    //   .doc(payload)
+    //   .set(payload)
+    //   .then(data => {
+    //     commit("SET_Data", payload);
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //   });
   },
   LogOut_Account({ commit }) {}
 };
