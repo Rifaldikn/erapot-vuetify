@@ -2,12 +2,9 @@
   <v-app id="login">
     <!-- <v-content> -->
     <v-container fluid fill-height>
-
       <v-layout align-center justify-center>
         <v-flex lg4>
-          <v-alert :value="alert.status" type="error" transition="scale-transition">
-            {{alert.msg}}
-          </v-alert>
+          <v-alert :value="alert.status" type="error" transition="scale-transition">{{alert.msg}}</v-alert>
           <v-toolbar dark color="primary">
             <v-toolbar-title>Login</v-toolbar-title>
             <v-spacer></v-spacer>
@@ -15,9 +12,29 @@
           <v-card class="elevation-1 pa-3">
             <v-card-text>
               <v-form>
-                <v-text-field append-icon="person" name="login" label="Login" type="text" v-model="model.username"></v-text-field>
-                <v-text-field append-icon="lock" name="password" label="Password" id="password" type="password" v-model="model.password"></v-text-field>
-                <v-select :items="items" label="Status Login" v-model="model.statusLogin" dense box required="true"></v-select>
+                <v-text-field
+                  append-icon="person"
+                  name="login"
+                  label="Login"
+                  type="text"
+                  v-model="model.username"
+                ></v-text-field>
+                <v-text-field
+                  append-icon="lock"
+                  name="password"
+                  label="Password"
+                  id="password"
+                  type="password"
+                  v-model="model.password"
+                ></v-text-field>
+                <v-select
+                  :items="items"
+                  label="Status Login"
+                  v-model="model.statusLogin"
+                  dense
+                  box
+                  required="true"
+                ></v-select>
               </v-form>
             </v-card-text>
             <v-card-actions>
@@ -59,7 +76,7 @@ export default {
           if (this.model.statusLogin == "Administrator") {
             this.$router.push("/admin");
           } else if (this.model.statusLogin == "Guru") {
-            this.$router.push("/guru");
+            this.$router.push("/admin");
           }
         }, 1000);
       } else {

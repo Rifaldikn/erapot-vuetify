@@ -12,20 +12,30 @@ import css from "vuetify/dist/vuetify.min.css";
 const options = {
   name: "_blank",
   specs: ["fullscreen=yes", "titlebar=yes", "scrollbars=yes"],
-  styles: ["../dist/static/css/app.d14d1830d29d52e42b2acc5e4c1320f7.css", "vuetify/dist/vuetify.min.css"]
+  styles: [
+    "../dist/static/css/app.d14d1830d29d52e42b2acc5e4c1320f7.css",
+    "vuetify/dist/vuetify.min.css"
+  ]
 };
 
 Vue.use(VueHtmlToPaper, options);
 
 // Initialize Firebase
 var config = {
-  apiKey: "AIzaSyCMUJG7XoHEF9_wCEO89R0ss7s8N2x5JS8",
-  authDomain: "erapot-7a9c5.firebaseapp.com",
-  databaseURL: "https://erapot-7a9c5.firebaseio.com",
-  projectId: "erapot-7a9c5",
-  storageBucket: "erapot-7a9c5.appspot.com",
-  messagingSenderId: "234662287317",
-  timestampsInSnapshots: true
+  // apiKey: "AIzaSyCMUJG7XoHEF9_wCEO89R0ss7s8N2x5JS8",
+  // authDomain: "erapot-7a9c5.firebaseapp.com",
+  // databaseURL: "https://erapot-7a9c5.firebaseio.com",
+  // projectId: "erapot-7a9c5",
+  // storageBucket: "erapot-7a9c5.appspot.com",
+  // messagingSenderId: "234662287317",
+  // timestampsInSnapshots: true,
+  apiKey: "AIzaSyAWF__6oUBJjlRfeJ0GwkApHFIqrhgafOo",
+  authDomain: "spa-erapot.firebaseapp.com",
+  databaseURL: "https://spa-erapot.firebaseio.com",
+  projectId: "spa-erapot",
+  storageBucket: "spa-erapot.appspot.com",
+  messagingSenderId: "762450954789",
+  appId: "1:762450954789:web:3602e7eb8332837f"
 };
 Firebase.initializeApp(config);
 export const db = Firebase.firestore();

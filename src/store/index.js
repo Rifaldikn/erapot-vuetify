@@ -9,6 +9,7 @@ import mapel from './modules/mapel'
 import jenisPenilaian from './modules/jenisPenilaian'
 import penilaian from './modules/penilaian'
 import laporan from './modules/laporan'
+import users from './modules/users'
 
 Vue.use(Vuex)
 export default new Vuex.Store({
@@ -21,6 +22,7 @@ export default new Vuex.Store({
     mapel,
     jenisPenilaian,
     penilaian,
-    laporan
+    laporan,
+    users
   }
 })

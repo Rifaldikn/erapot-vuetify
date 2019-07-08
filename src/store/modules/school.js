@@ -16,7 +16,7 @@ const mutations = {
 const actions = {
   SET_Data ({ commit }, payload) {
     db.collection('school').doc('schoolData').set(payload)
-      .then((data) => {
+      .then(() => {
         commit('SET_Data', payload)
       })
       .catch((error) => {

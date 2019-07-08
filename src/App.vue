@@ -114,6 +114,9 @@ export default {
       ]
     };
   },
+  computed: {
+...mapGetters
+  },
   name: "App"
 };
 </script>

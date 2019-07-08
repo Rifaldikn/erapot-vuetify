@@ -40,11 +40,11 @@ var router = new Router({
       meta: {
         public: true
       },
-      beforeEnter (to, from, next) {
-        if (store.getters['school/schoolData']) {
-          router.push('login')
-        }
-      }
+      // beforeEnter (to, from, next) {
+      //   if (store.getters['school/schoolData']) {
+      //     router.push('login')
+      //   }
+      // }
     },
     {
       path: '/admin/guru',
@@ -123,11 +123,6 @@ var router = new Router({
   ]
 })
 
-// router.beforeEach((to, from, next) => {
-//   if(5 < 100){
-//     router.push('/login')
-//   }
-// })
 
 
 export default router
