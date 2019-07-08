@@ -51,7 +51,7 @@
         </v-toolbar-title>
       </v-toolbar>
 
-      <v-content class="blue-grey lighten-5 whiteHidden" >
+      <v-content class="blue-grey lighten-5 whiteHidden">
         <v-container fluid>
           <v-fade-transition mode="out-in">
             <!-- <v-app> -->
@@ -114,9 +114,6 @@ export default {
       ]
     };
   },
-  computed: {
-...mapGetters
-  },
   name: "App"
 };
 </script>
@@ -132,10 +129,10 @@ font-family: "Roboto", sans-serif;
   .hidden {
     display: none !important;
   }
- .blue-grey.lighten-5 {
-    background-color: #ffffff!important;
-    border-color: #eceff1!important;
-}
+  .blue-grey.lighten-5 {
+    background-color: #ffffff !important;
+    border-color: #eceff1 !important;
+  }
   /* table {
     border-radius: 3px;
     background-color: #42b983;

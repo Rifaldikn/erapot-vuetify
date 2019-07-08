@@ -5,19 +5,30 @@
       <v-layout align-center justify-center>
         <v-flex lg4>
           <v-alert :value="alert.status" type="error" transition="scale-transition">{{alert.msg}}</v-alert>
-          <v-toolbar dark color="primary">
-            <v-toolbar-title>Login</v-toolbar-title>
-            <v-spacer></v-spacer>
-          </v-toolbar>
+          <!-- <template v-slot:extension> -->
+
+          <!-- </v-container> -->
+
           <v-card class="elevation-1 pa-3">
+            <v-toolbar dark color="primary">
+              <v-toolbar-title>{{tabModel}}</v-toolbar-title>
+              <v-spacer></v-spacer>
+            </v-toolbar>
+            <v-tabs v-model="tabModel" centered slider-color="purple">
+              <v-tab key="Login" href="#Login">Login</v-tab>
+              <v-tab key="Signup" href="#Signup">Signup</v-tab>
+            </v-tabs>
+            <!-- </template> -->
+            <!-- <v-container fluid fill-height color="white"> -->
+
             <v-card-text>
               <v-form>
                 <v-text-field
                   append-icon="person"
-                  name="login"
-                  label="Login"
+                  name="Email"
+                  label="Email"
                   type="text"
-                  v-model="model.username"
+                  v-model="model.email"
                 ></v-text-field>
                 <v-text-field
                   append-icon="lock"
@@ -28,6 +39,7 @@
                   v-model="model.password"
                 ></v-text-field>
                 <v-select
+                  v-if="signup"
                   :items="items"
                   label="Status Login"
                   v-model="model.statusLogin"
@@ -38,8 +50,22 @@
               </v-form>
             </v-card-text>
             <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn block color="primary" @click="login" :loading="loading">Login</v-btn>
+              <v-tabs-items v-model="tabModel" color="white">
+                <v-tab-item key="Signup" value="Signup">
+                  <v-card flat>
+                    <v-card-text>
+                      <v-btn block color="primary" @click="signup">Signup</v-btn>
+                    </v-card-text>
+                  </v-card>
+                </v-tab-item>
+                <v-tab-item key="Login" value="Login">
+                  <v-card flat>
+                    <v-card-text>
+                      <v-btn block color="primary" @click="login" :loading="loading">Login</v-btn>
+                    </v-card-text>
+                  </v-card>
+                </v-tab-item>
+              </v-tabs-items>
             </v-card-actions>
           </v-card>
         </v-flex>
@@ -53,12 +79,13 @@
 export default {
   data: () => ({
     loading: false,
+    tabModel: "Login",
     alert: {
       status: false,
       msg: ""
     },
     model: {
-      username: "",
+      email: "",
       password: "",
       statusLogin: ""
     },
