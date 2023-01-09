@@ -14,7 +14,7 @@
     "axios": "^0.18.0",
     "fast-crc32c": "^1.0.4",
     "firebase": "^5.5.8",
-    "firebase-admin": "^6.1.0",
+    "firebase-admin": "^11.4.1",
     "http2": "^3.3.7",
     "vue": "^2.5.2",
     "vue-html-to-paper": "^1.0.3",
